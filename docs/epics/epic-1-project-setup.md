@@ -38,7 +38,7 @@ Set up the development environment and create the iOS project structure with pro
   - Transformers: ✅ 4.57.3 (already installed)
 - [x] **Git LFS**: ✅ Version 3.7.1 installed
   - For managing large model files (~350MB)
-  - Configured to track *.mlmodel and *.mlpackage files
+  - Configured to track _.mlmodel and_.mlpackage files
 
 #### Verification
 
@@ -90,7 +90,7 @@ duplicate-photos-ios/
   - Xcode template in place
   - Git LFS tracked files configured
 - [x] Configure Git LFS for .mlmodel files ✅ Complete
-  - Tracking *.mlmodel and *.mlpackage
+  - Tracking _.mlmodel and_.mlpackage
   - .gitattributes committed
 - [x] Create README.md ✅ Already exists
   - Project description

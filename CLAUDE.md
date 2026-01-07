@@ -6,17 +6,29 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Native iOS app for detecting and managing duplicate photos using on-device CoreML processing. Built with Swift/SwiftUI, following MVVM architecture.
 
-**Current Status**: Phase 1 (Foundation) - Project structure defined but Xcode project not yet created.
+**Current Status**: Phase 1 (Foundation) - 90% Complete. Xcode project created, core services implemented.
+
+## Critical Work Rules
+
+**REQUIRED: After completing ANY task, you MUST immediately update the documentation:**
+
+1. Update the relevant epic file in `docs/epics/` to mark tasks as complete
+2. Update `docs/PROJECT_TRACKER.md` with current progress
+3. Check off completed items with `[x]` and add ✅ status markers
+4. This is NOT optional - it must be done after every single task
 
 ## Project State
 
-This repository contains comprehensive planning documentation but **no Swift code yet**. The Xcode project needs to be created first (see Epic 1 in docs/epics/).
+✅ Xcode project created (DuplicatePhotos.xcodeproj)
+✅ Core services implemented (PhotoLibrary, Embedding, Similarity, Cache, DuplicateDetector)
+✅ MVVM structure in place
+⏳ Next: Convert CLIP model to CoreML
 
-Before writing code:
+Next steps:
 
-1. Xcode project must be created at repository root
-2. CLIP model must be converted to CoreML using `scripts/convert_clip_to_coreml.py`
-3. Python reference repo should be added as Git submodule to `Reference/duplicate-images/`
+1. CLIP model must be converted to CoreML using `scripts/convert_clip_to_coreml.py`
+2. Update EmbeddingService to use the converted model
+3. Build complete UI for scanning and viewing results
 
 ## Key Commands
 
