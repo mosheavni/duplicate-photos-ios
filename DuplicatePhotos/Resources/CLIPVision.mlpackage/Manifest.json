@@ -1,10 +1,18 @@
 {
-  "fileFormatVersion": "1.0.0",
-  "itemInfoEntries": {
-    "model.mlmodel": {
-      "path": "Data/model.mlmodel",
-      "description": "Placeholder CLIP Vision Model"
-    }
-  },
-  "rootModelIdentifier": "model"
+    "fileFormatVersion": "1.0.0",
+    "itemInfoEntries": {
+        "7D27C020-FFD6-4288-AC72-3E0C7690B144": {
+            "author": "com.apple.CoreML",
+            "description": "CoreML Model Weights",
+            "name": "weights",
+            "path": "com.apple.CoreML/weights"
+        },
+        "853EC9FF-DD0B-4207-9E7A-BE778A8EC00A": {
+            "author": "com.apple.CoreML",
+            "description": "CoreML Model Specification",
+            "name": "model.mlmodel",
+            "path": "com.apple.CoreML/model.mlmodel"
+        }
+    },
+    "rootModelIdentifier": "853EC9FF-DD0B-4207-9E7A-BE778A8EC00A"
 }
