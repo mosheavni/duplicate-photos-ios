@@ -13,8 +13,21 @@ Requirements:
 
 import coremltools as ct
 import torch
+import torch.nn as nn
 from transformers import CLIPVisionModel, CLIPProcessor
 import os
+
+
+class CLIPVisionWrapper(nn.Module):
+    """Wrapper to extract pooler_output from CLIP vision model"""
+    def __init__(self, clip_model):
+        super().__init__()
+        self.model = clip_model
+
+    def forward(self, pixel_values):
+        outputs = self.model(pixel_values)
+        # Extract just the pooler_output (512-dim embedding)
+        return outputs.pooler_output
 
 
 def convert_clip_vision_to_coreml(output_path="./DuplicatePhotos/Resources"):
@@ -29,8 +42,11 @@ def convert_clip_vision_to_coreml(output_path="./DuplicatePhotos/Resources"):
     # 1. Load pretrained CLIP vision model
     print("📥 Loading CLIP vision model...")
     model_name = "openai/clip-vit-base-patch32"
-    model = CLIPVisionModel.from_pretrained(model_name)
+    clip_model = CLIPVisionModel.from_pretrained(model_name)
     processor = CLIPProcessor.from_pretrained(model_name)
+
+    # Wrap the model to extract just the pooler_output
+    model = CLIPVisionWrapper(clip_model)
 
     # Set model to evaluation mode
     model.eval()
@@ -43,7 +59,8 @@ def convert_clip_vision_to_coreml(output_path="./DuplicatePhotos/Resources"):
 
     # 3. Trace the model
     print("🔍 Tracing model...")
-    traced_model = torch.jit.trace(model, example_input)
+    with torch.no_grad():
+        traced_model = torch.jit.trace(model, example_input)
 
     print("✅ Model traced successfully")
 
