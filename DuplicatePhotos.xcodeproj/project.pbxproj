@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		040598B99DF64EC3EF7913E8 /* PhotoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A09693F443A19C5DEF6976 /* PhotoAsset.swift */; };
 		3DF67E067E4845EFBBDEB5FE /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7B8CA84CB0127E54146D92 /* CacheService.swift */; };
+		3FAF13DE32E025E3111A459F /* CLIPVision.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 5EA5372067AE979715197B6E /* CLIPVision.mlpackage */; };
 		4FDE1FE660019229B6986E82 /* SimilarityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB96A4E57ED40C04238CA190 /* SimilarityService.swift */; };
 		6183A5A495C0911919FC0EE7 /* DuplicateGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6ADCB478753E8D3B9163D /* DuplicateGroup.swift */; };
 		9728F31BA7F8DC9078228749 /* PhotoLibraryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5827240DEB380478ACCAFE9D /* PhotoLibraryService.swift */; };
@@ -43,6 +44,7 @@
 		2A8E11E4BBC8C2A2008D7939 /* DuplicatePhotosUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DuplicatePhotosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E7B8CA84CB0127E54146D92 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		5827240DEB380478ACCAFE9D /* PhotoLibraryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryService.swift; sourceTree = "<group>"; };
+		5EA5372067AE979715197B6E /* CLIPVision.mlpackage */ = {isa = PBXFileReference; path = CLIPVision.mlpackage; sourceTree = "<group>"; };
 		94112D1F4662166C4010CC26 /* DuplicateDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateDetector.swift; sourceTree = "<group>"; };
 		9966B3965AF313ABED4F7808 /* EmbeddingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddingService.swift; sourceTree = "<group>"; };
 		A0D413DEB5140CC60504B197 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				A0D413DEB5140CC60504B197 /* Assets.xcassets */,
+				5EA5372067AE979715197B6E /* CLIPVision.mlpackage */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FAF13DE32E025E3111A459F /* CLIPVision.mlpackage in Sources */,
 				3DF67E067E4845EFBBDEB5FE /* CacheService.swift in Sources */,
 				DFD0426609FF8C11EA0046FE /* ContentView.swift in Sources */,
 				EFED8E5DFEBCE84EE8368D8F /* DuplicateDetector.swift in Sources */,
