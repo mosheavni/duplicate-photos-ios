@@ -1,0 +1,3 @@
+[submodule "Reference/duplicate-images"]
+	path = Reference/duplicate-images
+	url = https://github.com/mosheavni/duplicated-images

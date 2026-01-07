@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /Users/Moshe.Avni/Repos/duplicate-photos-ios log --oneline -10)",
+      "Bash(git -C /Users/Moshe.Avni/Repos/duplicate-photos-ios show --stat b839a95)",
+      "Bash(git -C /Users/Moshe.Avni/Repos/duplicate-photos-ios config:*)",
+      "Bash(xcodebuild:*)",
+      "Bash(swift:*)",
+      "Bash(pip3:*)",
+      "Bash(git lfs:*)",
+      "Bash(sudo xcode-select:*)",
+      "Bash(xcode-select:*)",
+      "Bash(/Applications/Xcode.app/Contents/Developer/usr/bin/swift:*)",
+      "Bash(/usr/bin/xcrun swift:*)",
+      "Bash(xcrun:*)",
+      "Bash(cat:*)",
+      "Bash(git add:*)",
+      "Bash(git submodule add:*)",
+      "Bash(git submodule:*)",
+      "Bash(chmod:*)"
+    ]
+  }
+}

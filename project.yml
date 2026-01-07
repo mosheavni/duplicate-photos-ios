@@ -1,0 +1,96 @@
+name: DuplicatePhotos
+
+options:
+  bundleIdPrefix: com.mosheavni
+  deploymentTarget:
+    iOS: "17.0"
+  developmentLanguage: en
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+
+targets:
+  DuplicatePhotos:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: DuplicatePhotos
+        excludes:
+          - "**/*.md"
+    info:
+      path: DuplicatePhotos/Info.plist
+      properties:
+        CFBundleDisplayName: "Duplicate Photos"
+        CFBundleName: "$(PRODUCT_NAME)"
+        CFBundleIdentifier: "$(PRODUCT_BUNDLE_IDENTIFIER)"
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: true
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        NSPhotoLibraryUsageDescription: "We need access to your photos to detect duplicates"
+        NSPhotoLibraryAddUsageDescription: "We need access to modify your photo library to merge duplicates"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.mosheavni.DuplicatePhotos
+        INFOPLIST_FILE: DuplicatePhotos/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_VERSION: "6.0"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: ""
+    dependencies: []
+
+  DuplicatePhotosTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - DuplicatePhotosTests
+    dependencies:
+      - target: DuplicatePhotos
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.mosheavni.DuplicatePhotosTests
+        SWIFT_VERSION: "6.0"
+
+  DuplicatePhotosUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - DuplicatePhotosUITests
+    dependencies:
+      - target: DuplicatePhotos
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.mosheavni.DuplicatePhotosUITests
+        SWIFT_VERSION: "6.0"
+
+schemes:
+  DuplicatePhotos:
+    build:
+      targets:
+        DuplicatePhotos: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - DuplicatePhotosTests
+        - DuplicatePhotosUITests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
