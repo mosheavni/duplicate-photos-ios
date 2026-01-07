@@ -77,10 +77,7 @@ actor DuplicateDetector {
             threshold: settings.similarityThreshold
         )
 
-        // 5. Group into duplicate sets
-        let groups = await similarity.groupSimilarPhotos(pairs: similarPairs)
-
-        // 6. Reconstruct groups with actual photo assets
+        // 5. Group into duplicate sets using connected components
         let finalGroups = reconstructGroups(from: similarPairs, photos: photoAssets)
 
         return finalGroups
