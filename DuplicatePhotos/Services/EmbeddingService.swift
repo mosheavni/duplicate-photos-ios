@@ -19,47 +19,55 @@ actor EmbeddingService {
         case predictionFailed
     }
 
-    private var model: MLModel?
+    private var model: VNCoreMLModel?
     private let embeddingDimension = 512
 
     /// Initialize and load the CoreML model
     func loadModel() async throws {
-        // TODO: Load actual CoreML model once converted
-        // For now, this is a placeholder
-        // guard let modelURL = Bundle.main.url(forResource: "CLIPVision", withExtension: "mlmodelc") else {
-        //     throw EmbeddingError.modelNotFound
-        // }
-        //
-        // model = try MLModel(contentsOf: modelURL)
+        guard let modelURL = Bundle.main.url(forResource: "CLIPVision", withExtension: "mlmodelc") else {
+            throw EmbeddingError.modelNotFound
+        }
+
+        let mlModel = try MLModel(contentsOf: modelURL)
+        model = try VNCoreMLModel(for: mlModel)
     }
 
     /// Extract embedding from an image
     func extractEmbedding(from image: UIImage) async throws -> [Float] {
-        // TODO: Implement actual CoreML inference once model is converted
-        // This is a placeholder that returns a random embedding for development
+        guard let model = model else {
+            throw EmbeddingError.modelLoadFailed
+        }
 
-        // Preprocess image to 224x224
-        guard let resizedImage = preprocessImage(image) else {
+        guard let cgImage = image.cgImage else {
             throw EmbeddingError.preprocessingFailed
         }
 
-        // TODO: Run CoreML model inference
-        // For now, return random embedding for structure testing
-        return (0..<embeddingDimension).map { _ in Float.random(in: -1...1) }
+        // Create CoreML request
+        let request = VNCoreMLRequest(model: model)
+        request.imageCropAndScaleOption = .centerCrop
+
+        // Run inference
+        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        try handler.perform([request])
+
+        // Extract embedding from results
+        guard let results = request.results as? [VNCoreMLFeatureValueObservation],
+              let firstResult = results.first,
+              let multiArray = firstResult.featureValue.multiArrayValue else {
+            throw EmbeddingError.predictionFailed
+        }
+
+        // Convert MLMultiArray to [Float]
+        var embedding = [Float](repeating: 0, count: embeddingDimension)
+        for i in 0..<embeddingDimension {
+            embedding[i] = Float(truncating: multiArray[i])
+        }
+
+        // Normalize the embedding
+        return normalizeEmbedding(embedding)
     }
 
-    /// Preprocess image to model input format (224x224 RGB)
-    private func preprocessImage(_ image: UIImage) -> UIImage? {
-        let targetSize = CGSize(width: 224, height: 224)
-
-        UIGraphicsBeginImageContextWithOptions(targetSize, true, 1.0)
-        defer { UIGraphicsEndImageContext() }
-
-        image.draw(in: CGRect(origin: .zero, size: targetSize))
-        return UIGraphicsGetImageFromCurrentImageContext()
-    }
-
-    /// Normalize embedding vector
+    /// Normalize embedding vector (L2 normalization)
     private func normalizeEmbedding(_ embedding: [Float]) -> [Float] {
         let sum = embedding.reduce(0) { $0 + ($1 * $1) }
         let magnitude = sqrt(sum)
