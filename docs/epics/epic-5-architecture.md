@@ -7,6 +7,7 @@
 ---
 
 ## Overview
+
 Implement MVVM architecture to separate business logic from UI, creating ViewModels and data models.
 
 ---
@@ -16,11 +17,13 @@ Implement MVVM architecture to separate business logic from UI, creating ViewMod
 ### Task 5.1: MVVM Architecture Setup
 
 **Files**:
+
 - `DuplicatePhotos/ViewModels/ScanViewModel.swift`
 - `DuplicatePhotos/ViewModels/DuplicateGroupViewModel.swift`
 - `DuplicatePhotos/ViewModels/SettingsViewModel.swift`
 
-#### Subtasks:
+#### Subtasks
+
 - [ ] Create ScanViewModel.swift
   - @Published properties for scan state
   - Async scan methods
@@ -42,12 +45,15 @@ Implement MVVM architecture to separate business logic from UI, creating ViewMod
 ### Task 5.2: Models
 
 **Files**:
+
 - `DuplicatePhotos/Models/PhotoAsset.swift`
 - `DuplicatePhotos/Models/DuplicateGroup.swift`
 - `DuplicatePhotos/Models/ScanSettings.swift`
 
-#### Subtasks:
+#### Subtasks
+
 - [ ] Create PhotoAsset.swift
+
   ```swift
   struct PhotoAsset: Identifiable {
       let id: String  // PHAsset.localIdentifier
@@ -56,7 +62,9 @@ Implement MVVM architecture to separate business logic from UI, creating ViewMod
       var embedding: [Float]?
   }
   ```
+
 - [ ] Create DuplicateGroup.swift
+
   ```swift
   struct DuplicateGroup: Identifiable {
       let id: UUID
@@ -64,7 +72,9 @@ Implement MVVM architecture to separate business logic from UI, creating ViewMod
       let similarities: [Float]
   }
   ```
+
 - [ ] Create ScanSettings.swift (Codable)
+
   ```swift
   struct ScanSettings: Codable {
       var threshold: Float = 0.90
@@ -72,6 +82,7 @@ Implement MVVM architecture to separate business logic from UI, creating ViewMod
       var useCache: Bool = true
   }
   ```
+
 - [ ] Add Codable conformance where needed
 - [ ] Add Equatable/Hashable where needed
 - [ ] Write unit tests
@@ -92,7 +103,9 @@ Implement MVVM architecture to separate business logic from UI, creating ViewMod
 ## Dependencies
 
 **Blocked By**:
+
 - Epic 3 (Core Services) - ViewModels depend on services
 
 **Blocks**:
+
 - Epic 4 (User Interface) - Views depend on ViewModels

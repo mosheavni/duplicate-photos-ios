@@ -7,6 +7,7 @@
 ---
 
 ## Overview
+
 Release the app to TestFlight for beta testing, then eventually to the App Store.
 
 ---
@@ -17,14 +18,16 @@ Release the app to TestFlight for beta testing, then eventually to the App Store
 
 **Status**: ⏳ Pending
 
-#### Prerequisites:
+#### Prerequisites
+
 - [ ] App Store Connect account configured
 - [ ] Paid Apple Developer Program membership ($99/year)
   - OR free tier with limited features
 - [ ] App identifier registered
 - [ ] Provisioning profiles configured
 
-#### Subtasks:
+#### Subtasks
+
 - [ ] Create App Store Connect entry
   - Bundle ID: `com.[yourname].DuplicatePhotos`
   - App name: "Duplicate Photos Cleaner" (or similar)
@@ -57,7 +60,8 @@ Release the app to TestFlight for beta testing, then eventually to the App Store
 
 **Status**: ⏳ Pending (Post-MVP)
 
-#### Requirements:
+#### Requirements
+
 - [ ] App Store listing
   - App name (max 30 chars)
   - Subtitle (max 30 chars)
@@ -85,14 +89,17 @@ Release the app to TestFlight for beta testing, then eventually to the App Store
   - Demo account (if login required - N/A)
   - Notes for reviewer
 
-#### Monetization Decision:
+#### Monetization Decision
+
 Choose one:
+
 - [ ] Free (with optional tip jar)
 - [ ] Paid upfront ($0.99 - $4.99)
 - [ ] Free with IAP (unlock features)
 - [ ] Subscription (monthly/yearly)
 
-#### Submission:
+#### Submission
+
 - [ ] Submit for App Review
 - [ ] Respond to reviewer questions/rejections
 - [ ] Release when approved
@@ -103,13 +110,15 @@ Choose one:
 
 ## Definition of Done
 
-### For TestFlight:
+### For TestFlight
+
 - [ ] Build uploaded successfully
 - [ ] At least 5 beta testers invited
 - [ ] No critical crashes
 - [ ] Positive feedback from testers
 
-### For App Store (Future):
+### For App Store (Future)
+
 - [ ] App approved by Apple
 - [ ] Live on App Store
 - [ ] No crashes reported
@@ -120,6 +129,7 @@ Choose one:
 ## Dependencies
 
 **Blocked By**:
+
 - Epic 6 (Testing & Polish) - must be complete and bug-free
 
 ---
@@ -127,6 +137,7 @@ Choose one:
 ## Post-Launch
 
 After App Store release:
+
 - [ ] Monitor crash reports (Xcode Organizer)
 - [ ] Respond to user reviews
 - [ ] Plan v1.1 features (from backlog)

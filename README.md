@@ -34,15 +34,15 @@ A native iOS app for detecting and managing duplicate photos using on-device Cor
 
 See [PROJECT_TRACKER.md](docs/PROJECT_TRACKER.md) for detailed progress.
 
-| Epic | Status | Progress |
-|------|--------|----------|
-| 1. Project Setup | 🔄 In Progress | 0/3 tasks |
-| 2. CoreML Model | ⏳ Pending | 0/2 tasks |
-| 3. Core Services | ⏳ Pending | 0/4 tasks |
-| 4. User Interface | ⏳ Pending | 0/5 tasks |
-| 5. Architecture | ⏳ Pending | 0/2 tasks |
-| 6. Testing & Polish | ⏳ Pending | 0/4 tasks |
-| 7. Deployment | ⏳ Pending | 0/2 tasks |
+| Epic                | Status         | Progress  |
+| ------------------- | -------------- | --------- |
+| 1. Project Setup    | 🔄 In Progress | 0/3 tasks |
+| 2. CoreML Model     | ⏳ Pending     | 0/2 tasks |
+| 3. Core Services    | ⏳ Pending     | 0/4 tasks |
+| 4. User Interface   | ⏳ Pending     | 0/5 tasks |
+| 5. Architecture     | ⏳ Pending     | 0/2 tasks |
+| 6. Testing & Polish | ⏳ Pending     | 0/4 tasks |
+| 7. Deployment       | ⏳ Pending     | 0/2 tasks |
 
 ---
 
@@ -58,6 +58,7 @@ See [PROJECT_TRACKER.md](docs/PROJECT_TRACKER.md) for detailed progress.
 ### Python Dependencies
 
 For model conversion:
+
 ```bash
 pip3 install coremltools transformers torch
 ```
@@ -65,33 +66,38 @@ pip3 install coremltools transformers torch
 ### Installation
 
 1. Clone this repository:
+
 ```bash
 git clone [repo-url]
 cd duplicate-photos-ios
 ```
 
-2. Install Git LFS (for model files):
+1. Install Git LFS (for model files):
+
 ```bash
 brew install git-lfs
 git lfs install
 ```
 
-3. Update submodules (Python reference):
+1. Update submodules (Python reference):
+
 ```bash
 git submodule update --init --recursive
 ```
 
-4. Convert CLIP model to CoreML:
+1. Convert CLIP model to CoreML:
+
 ```bash
 python3 scripts/convert_clip_to_coreml.py
 ```
 
-5. Open in Xcode:
+1. Open in Xcode:
+
 ```bash
 open DuplicatePhotos.xcodeproj
 ```
 
-6. Build and run on simulator or device
+1. Build and run on simulator or device
 
 ---
 
@@ -163,6 +169,7 @@ See [Python Reference](Reference/duplicate-images/) for original implementation.
 ## Testing
 
 Run tests in Xcode:
+
 ```bash
 # Unit tests
 cmd + U
@@ -184,6 +191,7 @@ This is a personal project, but suggestions are welcome! Please open an issue to
 ## Roadmap
 
 ### MVP (v1.0) - 8 weeks
+
 - [x] Project setup
 - [ ] CoreML model conversion
 - [ ] Core duplicate detection
@@ -192,6 +200,7 @@ This is a personal project, but suggestions are welcome! Please open an issue to
 - [ ] TestFlight beta
 
 ### Post-MVP (v1.1+)
+
 - [ ] Multiple CLIP model options
 - [ ] Fine-grained threshold control
 - [ ] Export duplicate report (CSV/JSON)

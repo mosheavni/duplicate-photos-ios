@@ -7,6 +7,7 @@
 ---
 
 ## Overview
+
 Convert the CLIP vision model to CoreML format for on-device inference and create a Swift wrapper service.
 
 **Critical Blocker**: This must be completed before duplicate detection can work!
@@ -19,7 +20,8 @@ Convert the CLIP vision model to CoreML format for on-device inference and creat
 
 **Status**: ⏳ Pending
 
-#### Conversion Script:
+#### Conversion Script
+
 - [ ] Create `scripts/convert_clip_to_coreml.py`
 - [ ] Implement conversion logic:
   - Load `openai/clip-vit-base-patch32`
@@ -47,6 +49,7 @@ Convert the CLIP vision model to CoreML format for on-device inference and creat
   - Normalization: ImageNet mean/std
 
 **Python Reference**:
+
 - `src/duplicate_images/ml/feature_extractor.py:35-67` - Preprocessing
 - `src/duplicate_images/ml/feature_extractor.py:85-120` - Extraction
 
@@ -58,24 +61,31 @@ Convert the CLIP vision model to CoreML format for on-device inference and creat
 
 **File**: `DuplicatePhotos/Services/EmbeddingService.swift`
 
-#### Subtasks:
+#### Subtasks
+
 - [ ] Create `EmbeddingService.swift`
 - [ ] Load CoreML model
+
   ```swift
   let model = try CLIPVisionModel(configuration: MLModelConfiguration())
   ```
+
 - [ ] Implement image preprocessing
   - Resize to 224x224
   - Normalize RGB values (ImageNet mean/std)
   - Convert UIImage → CVPixelBuffer
 - [ ] Extract embedding for single image
+
   ```swift
   func extractEmbedding(from image: UIImage) async throws -> [Float]
   ```
+
 - [ ] Add batch processing
+
   ```swift
   func extractEmbeddings(from images: [UIImage], batchSize: Int) async throws -> [[Float]]
   ```
+
 - [ ] Add error handling
   - Model loading failures
   - Invalid images
@@ -101,10 +111,12 @@ Convert the CLIP vision model to CoreML format for on-device inference and creat
 ## Dependencies
 
 **Blocks**:
+
 - Task 3.2 (Similarity Service) - needs embeddings
 - Task 3.4 (Duplicate Detector) - needs embeddings
 
 **Blocked By**:
+
 - Task 1.1 (Environment Setup) - needs coremltools
 - Task 1.2 (Xcode Project) - needs project structure
 
