@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var viewModel = ScanViewModel()
+    @State private var showError = false
 
     var body: some View {
         NavigationStack {
@@ -37,7 +38,10 @@ struct ContentView: View {
                     }
                 }
             }
-            .alert("Error", isPresented: .constant(viewModel.errorMessage != nil)) {
+            .onChange(of: viewModel.errorMessage) { _, newValue in
+                showError = newValue != nil
+            }
+            .alert("Error", isPresented: $showError) {
                 Button("OK") {
                     viewModel.errorMessage = nil
                 }
