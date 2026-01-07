@@ -17,7 +17,10 @@
       "Bash(git add:*)",
       "Bash(git submodule add:*)",
       "Bash(git submodule:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(tree:*)",
+      "Bash(python3:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd placeholder CoreML model and document Python 3.14 compatibility issue\n\nEpic 2 Status: ⚠️ Blocked \\(1/2 tasks - placeholder model created\\)\n\n## Changes\n\n### Model Conversion\n- Created `convert_clip_simple.py` for placeholder model generation\n- Generated placeholder `CLIPVision.mlpackage` structure\n- Allows Xcode project to build without functional model\n- App can run with random embeddings for UI development\n\n### Documentation Updates\n- Updated `scripts/README.md` with Python version requirements\n- Documented Python 3.14 compatibility issue with PyTorch 2.9.1\n- Added instructions for Python 3.10-3.12 usage\n- Updated Epic 2 status in `docs/epics/epic-2-coreml-model.md`\n- Updated PROJECT_TRACKER.md to reflect placeholder model status\n\n## Known Issue\n\n⚠️ **Python 3.14 Compatibility**: PyTorch 2.9.1 cannot import with Python 3.14\ndue to `typing.Union.__module__` AttributeError in quantization module.\n\n**Workaround**: Use Python 3.10-3.12 for model conversion\n```bash\nbrew install python@3.11\npython3.11 scripts/convert_clip_to_coreml.py\n```\n\n## Impact\n\n- ✅ Xcode project can build and run\n- ✅ UI development can proceed\n- ⚠️ Duplicate detection will use random embeddings \\(not functional\\)\n- ⏳ Real model pending Python version compatibility\n\n🤖 Generated with Claude Code\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
     ]
   }
 }

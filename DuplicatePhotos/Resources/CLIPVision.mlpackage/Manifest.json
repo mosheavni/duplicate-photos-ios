@@ -1,0 +1,10 @@
+{
+  "fileFormatVersion": "1.0.0",
+  "itemInfoEntries": {
+    "model.mlmodel": {
+      "path": "Data/model.mlmodel",
+      "description": "Placeholder CLIP Vision Model"
+    }
+  },
+  "rootModelIdentifier": "model"
+}

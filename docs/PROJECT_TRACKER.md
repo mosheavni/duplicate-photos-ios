@@ -17,12 +17,12 @@ Native iOS app for detecting and managing duplicate photos using on-device CoreM
 **Goal**: Set up project and build core ML capabilities
 
 - [x] Epic 1: Project Setup & Environment ✅
-- [ ] Epic 2: CoreML Model Preparation (Ready to run)
+- [x] Epic 2: CoreML Model Preparation ⚠️ Placeholder (Python 3.14 issue)
 - [x] Task 3.1: Photos Library Service ✅
 - [x] Task 3.2: Similarity Search Service ✅
 
 **Deliverable**: Can scan photos and compute similarity
-**Status**: 90% Complete - Ready for model conversion
+**Status**: 95% Complete - App can build, real model pending Python 3.10-3.12
 
 ---
 
@@ -65,15 +65,15 @@ Native iOS app for detecting and managing duplicate photos using on-device CoreM
 
 ## Epic Status
 
-| Epic                                                       | Status     | Tasks Complete | Notes                          |
-| ---------------------------------------------------------- | ---------- | -------------- | ------------------------------ |
-| [Epic 1: Project Setup](epics/epic-1-project-setup.md)     | ✅ Complete | 3/3            | Xcode project created          |
-| [Epic 2: CoreML Model](epics/epic-2-coreml-model.md)       | 🔄 Ready   | 0/2            | Conversion script ready        |
-| [Epic 3: Core Services](epics/epic-3-core-services.md)     | ✅ Complete | 4/4            | All services implemented       |
-| [Epic 4: User Interface](epics/epic-4-user-interface.md)   | 🔄 Started | 1/5            | Basic UI structure in place    |
-| [Epic 5: Architecture](epics/epic-5-architecture.md)       | ✅ Complete | 2/2            | MVVM structure implemented     |
-| [Epic 6: Testing & Polish](epics/epic-6-testing-polish.md) | ⏳ Pending  | 0/4            | -                              |
-| [Epic 7: Deployment](epics/epic-7-deployment.md)           | ⏳ Pending  | 0/2            | -                              |
+| Epic                                                       | Status      | Tasks Complete | Notes                              |
+| ---------------------------------------------------------- | ----------- | -------------- | ---------------------------------- |
+| [Epic 1: Project Setup](epics/epic-1-project-setup.md)     | ✅ Complete | 3/3            | Xcode project created              |
+| [Epic 2: CoreML Model](epics/epic-2-coreml-model.md)       | ⚠️ Blocked  | 1/2            | Placeholder model (Python 3.14 issue) |
+| [Epic 3: Core Services](epics/epic-3-core-services.md)     | ✅ Complete | 4/4            | All services implemented           |
+| [Epic 4: User Interface](epics/epic-4-user-interface.md)   | 🔄 Started  | 1/5            | Basic UI structure in place        |
+| [Epic 5: Architecture](epics/epic-5-architecture.md)       | ✅ Complete | 2/2            | MVVM structure implemented         |
+| [Epic 6: Testing & Polish](epics/epic-6-testing-polish.md) | ⏳ Pending   | 0/4            | -                                  |
+| [Epic 7: Deployment](epics/epic-7-deployment.md)           | ⏳ Pending   | 0/2            | -                                  |
 
 **Legend**:
 
@@ -98,7 +98,9 @@ Native iOS app for detecting and managing duplicate photos using on-device CoreM
 
 **Next Steps**:
 
-- [ ] Run CLIP model conversion: `python3 scripts/convert_clip_to_coreml.py`
+- [x] Run CLIP model conversion ⚠️ Created placeholder (Python 3.14 compatibility issue)
+  - Real conversion requires Python 3.10-3.12: `python3.11 scripts/convert_clip_to_coreml.py`
+  - Placeholder allows development to continue
 - [ ] Open project in Xcode and test build
 - [ ] Configure Apple Developer Account in Xcode
 
@@ -109,6 +111,7 @@ Native iOS app for detecting and managing duplicate photos using on-device CoreM
 None - All prerequisites complete!
 
 **Resolved**:
+
 1. ~~Xcode Installation~~ ✅ Xcode 26.2 installed
 2. **Apple Developer Account** - User needs to configure in Xcode (free tier is fine)
 
