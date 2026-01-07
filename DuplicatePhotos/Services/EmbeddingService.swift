@@ -21,19 +21,26 @@ actor EmbeddingService {
 
     private var model: VNCoreMLModel?
     private let embeddingDimension = 512
+    private var isModelLoaded = false
 
-    /// Initialize and load the CoreML model
-    func loadModel() async throws {
+    /// Load the CoreML model if not already loaded
+    private func ensureModelLoaded() async throws {
+        guard !isModelLoaded else { return }
+
         guard let modelURL = Bundle.main.url(forResource: "CLIPVision", withExtension: "mlmodelc") else {
             throw EmbeddingError.modelNotFound
         }
 
         let mlModel = try MLModel(contentsOf: modelURL)
         model = try VNCoreMLModel(for: mlModel)
+        isModelLoaded = true
     }
 
     /// Extract embedding from an image
     func extractEmbedding(from image: UIImage) async throws -> [Float] {
+        // Ensure model is loaded
+        try await ensureModelLoaded()
+
         guard let model = model else {
             throw EmbeddingError.modelLoadFailed
         }
