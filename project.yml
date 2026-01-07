@@ -19,6 +19,9 @@ targets:
       - path: DuplicatePhotos
         excludes:
           - "**/*.md"
+    resources:
+      - path: DuplicatePhotos/Resources
+        type: folder
     info:
       path: DuplicatePhotos/Info.plist
       properties:
