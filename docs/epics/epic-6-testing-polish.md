@@ -7,6 +7,7 @@
 ---
 
 ## Overview
+
 Comprehensive testing, performance optimization, and UI/UX polish before beta release.
 
 ---
@@ -44,6 +45,7 @@ Comprehensive testing, performance optimization, and UI/UX polish before beta re
 ### Task 6.2: UI Testing
 
 **Test Scenarios**:
+
 - [ ] Scan flow (happy path)
 - [ ] Handle no duplicates found
 - [ ] Handle photo library permission denied
@@ -61,11 +63,13 @@ Comprehensive testing, performance optimization, and UI/UX polish before beta re
 ### Task 6.3: Performance Optimization
 
 **Performance Targets**:
+
 - Scan 1000 photos in <30 seconds
 - Smooth 60fps scrolling
 - Memory usage <500MB for 10k photos
 
-#### Subtasks:
+#### Subtasks
+
 - [ ] Profile with Instruments
   - Time Profiler (CPU usage)
   - Allocations (memory usage)
@@ -89,6 +93,7 @@ Comprehensive testing, performance optimization, and UI/UX polish before beta re
 ### Task 6.4: Polish & UX
 
 **Nice-to-haves**:
+
 - [ ] Add haptic feedback
   - On button taps
   - On delete/merge actions
@@ -128,4 +133,5 @@ Comprehensive testing, performance optimization, and UI/UX polish before beta re
 ## Dependencies
 
 **Blocked By**:
+
 - All previous epics must be complete

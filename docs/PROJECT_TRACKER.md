@@ -1,17 +1,19 @@
 # Duplicate Photos iOS - Project Tracker
 
 ## Project Overview
+
 Native iOS app for detecting and managing duplicate photos using on-device CoreML processing.
 
 **Tech Stack**: Swift, SwiftUI, CoreML, PHPhotoLibrary
 **Timeline**: 8 weeks to MVP
-**Repository**: https://github.com/[your-username]/duplicate-photos-ios
+**Repository**: <https://github.com/mosheavni/duplicate-photos-ios>
 
 ---
 
 ## Development Phases
 
 ### Phase 1: Foundation (Week 1-2)
+
 **Goal**: Set up project and build core ML capabilities
 
 - [ ] Epic 1: Project Setup & Environment
@@ -24,6 +26,7 @@ Native iOS app for detecting and managing duplicate photos using on-device CoreM
 ---
 
 ### Phase 2: Core Functionality (Week 3-4)
+
 **Goal**: Build complete detection pipeline
 
 - [ ] Task 3.3: Caching Service
@@ -36,6 +39,7 @@ Native iOS app for detecting and managing duplicate photos using on-device CoreM
 ---
 
 ### Phase 3: User Interface (Week 5-6)
+
 **Goal**: Build beautiful UI with merge/delete functionality
 
 - [ ] Task 4.3: Duplicate Groups List
@@ -48,6 +52,7 @@ Native iOS app for detecting and managing duplicate photos using on-device CoreM
 ---
 
 ### Phase 4: Testing & Release (Week 7-8)
+
 **Goal**: Polish and release beta
 
 - [ ] Epic 6: Testing & Polish
@@ -59,17 +64,18 @@ Native iOS app for detecting and managing duplicate photos using on-device CoreM
 
 ## Epic Status
 
-| Epic | Status | Tasks Complete | Notes |
-|------|--------|----------------|-------|
-| [Epic 1: Project Setup](epics/epic-1-project-setup.md) | 🔄 In Progress | 0/3 | Installing dependencies |
-| [Epic 2: CoreML Model](epics/epic-2-coreml-model.md) | ⏳ Pending | 0/2 | Blocked by Xcode install |
-| [Epic 3: Core Services](epics/epic-3-core-services.md) | ⏳ Pending | 0/4 | - |
-| [Epic 4: User Interface](epics/epic-4-user-interface.md) | ⏳ Pending | 0/5 | - |
-| [Epic 5: Architecture](epics/epic-5-architecture.md) | ⏳ Pending | 0/2 | - |
-| [Epic 6: Testing & Polish](epics/epic-6-testing-polish.md) | ⏳ Pending | 0/4 | - |
-| [Epic 7: Deployment](epics/epic-7-deployment.md) | ⏳ Pending | 0/2 | - |
+| Epic                                                       | Status         | Tasks Complete | Notes                    |
+| ---------------------------------------------------------- | -------------- | -------------- | ------------------------ |
+| [Epic 1: Project Setup](epics/epic-1-project-setup.md)     | 🔄 In Progress | 0/3            | Installing dependencies  |
+| [Epic 2: CoreML Model](epics/epic-2-coreml-model.md)       | ⏳ Pending     | 0/2            | Blocked by Xcode install |
+| [Epic 3: Core Services](epics/epic-3-core-services.md)     | ⏳ Pending     | 0/4            | -                        |
+| [Epic 4: User Interface](epics/epic-4-user-interface.md)   | ⏳ Pending     | 0/5            | -                        |
+| [Epic 5: Architecture](epics/epic-5-architecture.md)       | ⏳ Pending     | 0/2            | -                        |
+| [Epic 6: Testing & Polish](epics/epic-6-testing-polish.md) | ⏳ Pending     | 0/4            | -                        |
+| [Epic 7: Deployment](epics/epic-7-deployment.md)           | ⏳ Pending     | 0/2            | -                        |
 
 **Legend**:
+
 - ✅ Complete
 - 🔄 In Progress
 - ⏳ Pending
@@ -82,6 +88,7 @@ Native iOS app for detecting and managing duplicate photos using on-device CoreM
 **Sprint Goal**: Complete Phase 1 (Foundation)
 
 **Active Tasks**:
+
 - [ ] Install Xcode 15+
 - [ ] Install coremltools
 - [ ] Install Git LFS

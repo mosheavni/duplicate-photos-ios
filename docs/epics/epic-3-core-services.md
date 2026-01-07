@@ -7,6 +7,7 @@
 ---
 
 ## Overview
+
 Build the core business logic services for photo library access, similarity detection, caching, and duplicate detection orchestration.
 
 ---
@@ -35,22 +36,29 @@ Build the core business logic services for photo library access, similarity dete
 
 - [ ] Create SimilarityService.swift
 - [ ] Implement cosine similarity (with Accelerate framework)
+
   ```swift
   func computeCosineSimilarity(_ a: [Float], _ b: [Float]) -> Float
   ```
+
 - [ ] Implement pairwise similarity search
+
   ```swift
   func findSimilarPairs(embeddings: [[Float]], threshold: Float) -> [(Int, Int, Float)]
   ```
+
 - [ ] Implement connected components grouping (DFS)
+
   ```swift
   func groupDuplicates(pairs: [(Int, Int, Float)]) -> [[Int]]
   ```
+
 - [ ] Add threshold parameter (default: 0.90)
 - [ ] Optimize with vDSP for performance
 - [ ] Write unit tests
 
 **Python Reference**:
+
 - `src/duplicate_images/ml/similarity_engine.py:145-180` - Cosine similarity
 - `src/duplicate_images/ml/similarity_engine.py:183-225` - Connected components
 
@@ -115,6 +123,7 @@ Build the core business logic services for photo library access, similarity dete
 ## Dependencies
 
 **Blocked By**:
+
 - Epic 2 (CoreML Model) - needs EmbeddingService
 
 ---

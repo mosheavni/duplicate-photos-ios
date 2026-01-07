@@ -7,6 +7,7 @@
 ---
 
 ## Overview
+
 Build beautiful, intuitive SwiftUI interfaces for scanning, viewing, and managing duplicate photos.
 
 ---
@@ -16,6 +17,7 @@ Build beautiful, intuitive SwiftUI interfaces for scanning, viewing, and managin
 ### Task 4.1: App Structure & Navigation
 
 **Files**:
+
 - `DuplicatePhotos/App/DuplicatePhotosApp.swift`
 - `DuplicatePhotos/Views/ContentView.swift`
 
@@ -113,6 +115,7 @@ Build beautiful, intuitive SwiftUI interfaces for scanning, viewing, and managin
 ## Dependencies
 
 **Blocked By**:
+
 - Epic 3 (Core Services) - needs DuplicateDetector
 - Epic 5 (Architecture) - needs ViewModels
 

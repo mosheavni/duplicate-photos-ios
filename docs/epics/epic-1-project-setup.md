@@ -7,6 +7,7 @@
 ---
 
 ## Overview
+
 Set up the development environment and create the iOS project structure with proper tooling and configuration.
 
 ---
@@ -17,7 +18,8 @@ Set up the development environment and create the iOS project structure with pro
 
 **Status**: 🔄 In Progress
 
-#### Required Installations:
+#### Required Installations
+
 - [ ] **Xcode 15+** (from Mac App Store)
   - ~15GB download
   - Includes Swift compiler, SwiftUI, iOS Simulator
@@ -27,7 +29,8 @@ Set up the development environment and create the iOS project structure with pro
 - [ ] **Command Line Tools**: ✅ Already installed
   - ~~`xcode-select --install`~~
 
-#### Python Dependencies for Model Conversion:
+#### Python Dependencies for Model Conversion
+
 - [ ] **coremltools**: `pip3 install coremltools`
   - Python: ✅ 3.14.0 (already installed)
   - PyTorch: ✅ 2.9.1 (already installed)
@@ -35,13 +38,14 @@ Set up the development environment and create the iOS project structure with pro
 - [ ] **Git LFS**: `brew install git-lfs && git lfs install`
   - For managing large model files (~350MB)
 
-#### Verification:
+#### Verification
+
 ```bash
 # After installations, verify:
-xcodebuild -version           # Should show Xcode 15+
-swift --version               # Should show Swift 5.9+
-pip3 list | grep coremltools  # Should show version
-git lfs version               # Should show installed
+xcodebuild -version          # Should show Xcode 15+
+swift --version              # Should show Swift 5.9+
+pip3 list | grep coremltools # Should show version
+git lfs version              # Should show installed
 ```
 
 ---
@@ -50,7 +54,8 @@ git lfs version               # Should show installed
 
 **Status**: ⏳ Pending
 
-#### Repository Structure:
+#### Repository Structure
+
 ```
 duplicate-photos-ios/
 ├── DuplicatePhotos/                    # Main app target
@@ -70,7 +75,8 @@ duplicate-photos-ios/
 └── Reference/                          # Python repo (submodule)
 ```
 
-#### Subtasks:
+#### Subtasks
+
 - [ ] Create new Xcode project
   - File → New → Project
   - iOS → App
@@ -100,16 +106,20 @@ duplicate-photos-ios/
 
 **Status**: ⏳ Pending
 
-#### Purpose:
+#### Purpose
+
 Keep reference to original Python implementation for algorithm comparison and porting.
 
-#### Subtasks:
+#### Subtasks
+
 - [ ] Add Python repo as submodule
+
   ```bash
   cd ~/Repos/duplicate-photos-ios
   git submodule add [python-repo-url] Reference/duplicate-images
   git submodule update --init --recursive
   ```
+
 - [ ] Document Python → Swift mapping
   - Create `docs/PYTHON_TO_SWIFT.md`
   - Map each Python file to planned Swift file
@@ -137,10 +147,12 @@ Keep reference to original Python implementation for algorithm comparison and po
 ## Dependencies
 
 **Blocks**:
+
 - Epic 2 (CoreML Model) - needs Xcode and coremltools
 - All other epics - need Xcode project structure
 
 **Blocked By**:
+
 - None
 
 ---
