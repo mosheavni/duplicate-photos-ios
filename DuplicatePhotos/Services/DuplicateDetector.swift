@@ -15,7 +15,7 @@ actor DuplicateDetector {
     private let similarity = SimilarityService()
     private let cache = CacheService()
 
-    typealias ProgressHandler = (Int, Int) -> Void
+    typealias ProgressHandler = @Sendable (Int, Int) -> Void
 
     /// Scan photo library for duplicates
     func scanForDuplicates(

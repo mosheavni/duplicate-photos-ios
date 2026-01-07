@@ -27,11 +27,11 @@ class ScanViewModel: ObservableObject {
         duplicateGroups = []
 
         do {
-            let groups = try await detector.scanForDuplicates(settings: settings) { current, total in
-                Task { @MainActor in
-                    self.currentPhoto = current
-                    self.totalPhotos = total
-                    self.progress = Double(current) / Double(total)
+            let groups = try await detector.scanForDuplicates(settings: settings) { @Sendable current, total in
+                Task { @MainActor [weak self] in
+                    self?.currentPhoto = current
+                    self?.totalPhotos = total
+                    self?.progress = Double(current) / Double(total)
                 }
             }
 
