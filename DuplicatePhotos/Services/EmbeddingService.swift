@@ -20,7 +20,7 @@ actor EmbeddingService {
     }
 
     private var model: VNCoreMLModel?
-    private let embeddingDimension = 768  // Actual model output dimension
+    private let embeddingDimension = 512  // Model outputs 512-dim embeddings
     private var isModelLoaded = false
 
     /// Load the CoreML model if not already loaded
