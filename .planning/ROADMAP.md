@@ -99,6 +99,12 @@ Plans:
 
 **Goal:** App is ready for personal use testing
 
+**Plans:** 2 plans
+
+Plans:
+- [ ] 73-01-PLAN.md — Unit tests for SimilarityService (cosine similarity, grouping)
+- [ ] 73-02-PLAN.md — Empty state UI with ContentUnavailableView, permission handling
+
 ### Requirements Addressed
 - SCAN-02: Progress bar shows meaningful progress during scan
 - TEST-01: Core services have unit test coverage
