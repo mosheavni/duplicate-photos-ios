@@ -40,14 +40,19 @@ actor EmbeddingService {
     func extractEmbedding(from image: UIImage) async throws -> [Float] {
         // Ensure model is loaded
         try await ensureModelLoaded()
+        print("🤖 Model loaded successfully")
 
         guard let model = model else {
+            print("❌ Model is nil")
             throw EmbeddingError.modelLoadFailed
         }
 
         guard let cgImage = image.cgImage else {
+            print("❌ Failed to get CGImage")
             throw EmbeddingError.preprocessingFailed
         }
+
+        print("📐 Image size: \(cgImage.width)x\(cgImage.height)")
 
         // Create CoreML request
         let request = VNCoreMLRequest(model: model)
@@ -61,8 +66,11 @@ actor EmbeddingService {
         guard let results = request.results as? [VNCoreMLFeatureValueObservation],
               let firstResult = results.first,
               let multiArray = firstResult.featureValue.multiArrayValue else {
+            print("❌ Failed to extract embedding from results")
             throw EmbeddingError.predictionFailed
         }
+
+        print("✅ Embedding extracted, dimension: \(multiArray.count)")
 
         // Convert MLMultiArray to [Float]
         var embedding = [Float](repeating: 0, count: embeddingDimension)
@@ -71,7 +79,9 @@ actor EmbeddingService {
         }
 
         // Normalize the embedding
-        return normalizeEmbedding(embedding)
+        let normalized = normalizeEmbedding(embedding)
+        print("✅ Embedding normalized, first 5 values: \(Array(normalized.prefix(5)))")
+        return normalized
     }
 
     /// Normalize embedding vector (L2 normalization)

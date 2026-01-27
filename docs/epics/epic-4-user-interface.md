@@ -1,7 +1,7 @@
 # Epic 4: User Interface 📱
 
-**Status**: ⏳ Pending
-**Phase**: 3 - User Interface
+**Status**: 🔄 In Progress (3/5 tasks complete)
+**Phase**: 2-3 - Core Functionality & User Interface
 **Duration**: 2 weeks
 
 ---
@@ -34,29 +34,31 @@ Build beautiful, intuitive SwiftUI interfaces for scanning, viewing, and managin
 ### Task 4.2: Scan Screen
 
 **File**: `DuplicatePhotos/Views/ScanView.swift`
+**Status**: ✅ Complete
 
-- [ ] Create ScanView.swift
-- [ ] Design beautiful scan button
-- [ ] Add progress indicator (circular or linear)
-- [ ] Show photo count while scanning
-- [ ] Display results summary
-- [ ] Handle permissions request UI
-- [ ] Add pull-to-refresh
-- [ ] Empty state (no duplicates found)
+- [x] Create ScanView.swift ✅
+- [x] Design beautiful scan button ✅
+- [x] Add progress indicator (linear with animation) ✅
+- [x] Show photo count while scanning ✅
+- [x] Display results summary ✅
+- [x] Handle permissions request UI ✅
+- [ ] Add pull-to-refresh (Future enhancement)
+- [x] Empty state (no duplicates found) ✅
 
 ---
 
 ### Task 4.3: Duplicate Groups List
 
 **File**: `DuplicatePhotos/Views/DuplicateGroupsListView.swift`
+**Status**: ✅ Complete
 
-- [ ] Create DuplicateGroupsListView.swift
-- [ ] Design group card component
-- [ ] Implement LazyVGrid layout
-- [ ] Add thumbnail loading (async)
-- [ ] Show similarity badge
-- [ ] Add tap gesture to navigate to detail
-- [ ] Show group count ("3 duplicates")
+- [x] Create DuplicateGroupsListView.swift ✅
+- [x] Design group card component ✅
+- [x] Implement LazyVStack layout ✅
+- [x] Add thumbnail loading (async) ✅
+- [x] Show similarity badge ✅
+- [x] Add tap gesture to navigate to detail ✅
+- [x] Show group count ("3 duplicates") ✅
 
 **Design Inspiration**: iOS Photos app duplicate detection
 
@@ -64,20 +66,18 @@ Build beautiful, intuitive SwiftUI interfaces for scanning, viewing, and managin
 
 ### Task 4.4: Duplicate Group Detail View
 
-**File**: `DuplicatePhotos/Views/DuplicateGroupDetailView.swift`
+**File**: `DuplicatePhotos/Views/GroupDetailView.swift`
+**Status**: ✅ Complete
 
-- [ ] Create DuplicateGroupDetailView.swift
-- [ ] Add photo carousel/pager (TabView or custom)
-- [ ] Implement selection UI (checkmarks)
-- [ ] Add "Merge" action button
-  - Keeps highest resolution
-  - Deletes others
-  - Shows confirmation
-- [ ] Add "Keep All" action
-- [ ] Add "Delete Selected" action
-- [ ] Show metadata (file size, dimensions, date)
-- [ ] Add undo support (iOS 16+ UndoManager)
-- [ ] Implement smooth animations
+- [x] Create GroupDetailView.swift ✅
+- [x] Add photo grid (2-column LazyVGrid) ✅
+- [x] Implement selection UI (checkmarks) ✅
+- [x] Add "Keep Best, Delete Others" action ✅
+- [x] Add "Keep All" action ✅
+- [x] Add "Delete Selected" action ✅
+- [x] Show metadata (file size, dimensions) ✅
+- [ ] Add undo support (iOS 16+ UndoManager) (Future enhancement)
+- [x] Implement smooth animations ✅
 
 ---
 

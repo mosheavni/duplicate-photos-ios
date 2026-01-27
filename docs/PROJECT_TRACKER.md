@@ -30,12 +30,15 @@ Native iOS app for detecting and managing duplicate photos using on-device CoreM
 
 **Goal**: Build complete detection pipeline
 
-- [ ] Task 3.3: Caching Service
-- [ ] Task 3.4: Duplicate Detection Orchestrator
-- [ ] Task 4.1: App Structure & Navigation
-- [ ] Task 4.2: Scan Screen
+- [x] Task 3.3: Caching Service ✅
+- [x] Task 3.4: Duplicate Detection Orchestrator ✅
+- [x] Task 4.1: App Structure & Navigation ✅
+- [x] Task 4.2: Scan Screen ✅
+- [x] Task 4.3: Duplicate Groups List ✅
+- [x] Task 4.4: Group Detail View ✅
 
 **Deliverable**: Working scan with results
+**Status**: ✅ Complete - Full duplicate detection UI implemented
 
 ---
 
@@ -65,15 +68,15 @@ Native iOS app for detecting and managing duplicate photos using on-device CoreM
 
 ## Epic Status
 
-| Epic                                                       | Status      | Tasks Complete | Notes                              |
-| ---------------------------------------------------------- | ----------- | -------------- | ---------------------------------- |
-| [Epic 1: Project Setup](epics/epic-1-project-setup.md)     | ✅ Complete | 3/3            | Xcode project created              |
-| [Epic 2: CoreML Model](epics/epic-2-coreml-model.md)       | ✅ Complete | 2/2            | Real CLIP model integrated         |
-| [Epic 3: Core Services](epics/epic-3-core-services.md)     | ✅ Complete | 4/4            | All services implemented           |
-| [Epic 4: User Interface](epics/epic-4-user-interface.md)   | 🔄 Started  | 1/5            | Basic UI structure in place        |
-| [Epic 5: Architecture](epics/epic-5-architecture.md)       | ✅ Complete | 2/2            | MVVM structure implemented         |
-| [Epic 6: Testing & Polish](epics/epic-6-testing-polish.md) | ⏳ Pending   | 0/4            | -                                  |
-| [Epic 7: Deployment](epics/epic-7-deployment.md)           | ⏳ Pending   | 0/2            | -                                  |
+| Epic                                                       | Status      | Tasks Complete | Notes                                      |
+| ---------------------------------------------------------- | ----------- | -------------- | ------------------------------------------ |
+| [Epic 1: Project Setup](epics/epic-1-project-setup.md)     | ✅ Complete | 3/3            | Xcode project created                      |
+| [Epic 2: CoreML Model](epics/epic-2-coreml-model.md)       | ✅ Complete | 2/2            | Real CLIP model integrated                 |
+| [Epic 3: Core Services](epics/epic-3-core-services.md)     | ✅ Complete | 4/4            | All services implemented                   |
+| [Epic 4: User Interface](epics/epic-4-user-interface.md)   | 🔄 Started  | 3/5            | Scan, Groups List, Detail views complete  |
+| [Epic 5: Architecture](epics/epic-5-architecture.md)       | ✅ Complete | 2/2            | MVVM structure implemented                 |
+| [Epic 6: Testing & Polish](epics/epic-6-testing-polish.md) | ⏳ Pending   | 0/4            | -                                          |
+| [Epic 7: Deployment](epics/epic-7-deployment.md)           | ⏳ Pending   | 0/2            | -                                          |
 
 **Legend**:
 
@@ -86,29 +89,24 @@ Native iOS app for detecting and managing duplicate photos using on-device CoreM
 
 ## Current Sprint
 
-**Sprint Goal**: Complete Phase 1 (Foundation)
+**Sprint Goal**: Phase 2 Complete - Full Duplicate Detection UI
 
-**Active Tasks**:
+**Completed in Phase 2**:
 
-- [x] Install Xcode 15+ ✅ Xcode 26.2
-- [x] Install coremltools ✅ Version 9.0
-- [x] Install Git LFS ✅ Version 3.7.1
-- [x] Create Xcode project ✅ DuplicatePhotos.xcodeproj
-- [x] Set up .gitignore ✅ Complete
+- [x] Enhanced scan progress UI with animations ✅
+- [x] Built duplicate groups list view ✅
+- [x] Created group detail view with photo grid ✅
+- [x] Implemented photo deletion functionality ✅
+- [x] Added metadata display (file size, dimensions) ✅
+- [x] Successful build on simulator ✅
 
-**Completed Steps**:
+**Next Steps (Phase 3)**:
 
-- [x] Run CLIP model conversion ✅ Using Python 3.12 with asdf
-- [x] Open project in Xcode and test build ✅
-- [x] Install iOS SDK in Xcode ✅
-- [x] Integrate real CoreML model ✅
-
-**Next Steps (Phase 2)**:
-
-- [ ] Test first build on simulator
-- [ ] Implement scan progress UI
-- [ ] Build duplicate groups list view
-- [ ] Add photo deletion functionality
+- [ ] Add Settings screen (Task 4.5)
+- [ ] Implement cache management UI
+- [ ] Add app icon and launch screen
+- [ ] Polish animations and transitions
+- [ ] Begin testing phase
 
 ---
 

@@ -51,6 +51,11 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         SWIFT_VERSION: "6.0"
         TARGETED_DEVICE_FAMILY: "1,2"
+      Debug:
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGN_STYLE: Manual
+        DEVELOPMENT_TEAM: ""
+      Release:
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: ""
     dependencies: []

@@ -39,20 +39,43 @@ actor SimilarityService {
         threshold: Float
     ) async -> [(PhotoAsset, PhotoAsset, Float)] {
         var similarPairs: [(PhotoAsset, PhotoAsset, Float)] = []
+        var maxSimilarity: Float = 0.0
+        var comparisonCount = 0
+
+        print("🔍 Finding similar pairs with threshold: \(threshold)")
+        print("📸 Total photos to compare: \(photos.count)")
 
         for i in 0..<photos.count {
-            guard let embeddingA = photos[i].embedding else { continue }
+            guard let embeddingA = photos[i].embedding else {
+                print("⚠️ Photo \(i) has no embedding")
+                continue
+            }
 
             for j in (i + 1)..<photos.count {
-                guard let embeddingB = photos[j].embedding else { continue }
+                guard let embeddingB = photos[j].embedding else {
+                    print("⚠️ Photo \(j) has no embedding")
+                    continue
+                }
 
                 let similarity = cosineSimilarity(embeddingA, embeddingB)
+                comparisonCount += 1
+
+                if similarity > maxSimilarity {
+                    maxSimilarity = similarity
+                }
 
                 if similarity >= threshold {
+                    print("✅ Found similar pair: \(i) <-> \(j), similarity: \(similarity)")
                     similarPairs.append((photos[i], photos[j], similarity))
+                } else if similarity > 0.80 {
+                    print("📊 High similarity (below threshold): \(i) <-> \(j), similarity: \(similarity)")
                 }
             }
         }
+
+        print("🎯 Comparisons made: \(comparisonCount)")
+        print("📈 Max similarity found: \(maxSimilarity)")
+        print("✅ Similar pairs found: \(similarPairs.count)")
 
         return similarPairs
     }

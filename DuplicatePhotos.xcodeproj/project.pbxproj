@@ -3,13 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 63;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		040598B99DF64EC3EF7913E8 /* PhotoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A09693F443A19C5DEF6976 /* PhotoAsset.swift */; };
+		35D766613BB658E2479D4A87 /* DuplicateGroupsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1D81DA3D9007743CE96E57 /* DuplicateGroupsListView.swift */; };
 		3DF67E067E4845EFBBDEB5FE /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7B8CA84CB0127E54146D92 /* CacheService.swift */; };
 		3FAF13DE32E025E3111A459F /* CLIPVision.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 5EA5372067AE979715197B6E /* CLIPVision.mlpackage */; };
+		48B24734114A3B7848738A5D /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5CCE87A184C6811EF89986 /* GroupDetailView.swift */; };
 		4FDE1FE660019229B6986E82 /* SimilarityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB96A4E57ED40C04238CA190 /* SimilarityService.swift */; };
 		6183A5A495C0911919FC0EE7 /* DuplicateGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6ADCB478753E8D3B9163D /* DuplicateGroup.swift */; };
 		9728F31BA7F8DC9078228749 /* PhotoLibraryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5827240DEB380478ACCAFE9D /* PhotoLibraryService.swift */; };
@@ -41,20 +43,22 @@
 
 /* Begin PBXFileReference section */
 		05A09693F443A19C5DEF6976 /* PhotoAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAsset.swift; sourceTree = "<group>"; };
-		2A8E11E4BBC8C2A2008D7939 /* DuplicatePhotosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DuplicatePhotosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E5CCE87A184C6811EF89986 /* GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailView.swift; sourceTree = "<group>"; };
+		2A8E11E4BBC8C2A2008D7939 /* DuplicatePhotosUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DuplicatePhotosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E7B8CA84CB0127E54146D92 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		5827240DEB380478ACCAFE9D /* PhotoLibraryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryService.swift; sourceTree = "<group>"; };
-		5EA5372067AE979715197B6E /* CLIPVision.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = CLIPVision.mlpackage; sourceTree = "<group>"; };
+		5EA5372067AE979715197B6E /* CLIPVision.mlpackage */ = {isa = PBXFileReference; path = CLIPVision.mlpackage; sourceTree = "<group>"; };
 		94112D1F4662166C4010CC26 /* DuplicateDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateDetector.swift; sourceTree = "<group>"; };
 		9966B3965AF313ABED4F7808 /* EmbeddingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddingService.swift; sourceTree = "<group>"; };
 		A0D413DEB5140CC60504B197 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A6AC9F74AA6AFB8011801E36 /* ScanSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanSettings.swift; sourceTree = "<group>"; };
-		A76B13426FDC5BDD5C87C192 /* DuplicatePhotosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DuplicatePhotosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A76B13426FDC5BDD5C87C192 /* DuplicatePhotosTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DuplicatePhotosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB96A4E57ED40C04238CA190 /* SimilarityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarityService.swift; sourceTree = "<group>"; };
 		BC09EB64DE253C00789D8F40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BF1D81DA3D9007743CE96E57 /* DuplicateGroupsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateGroupsListView.swift; sourceTree = "<group>"; };
 		CCA6ADCB478753E8D3B9163D /* DuplicateGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateGroup.swift; sourceTree = "<group>"; };
 		D539874ECB0E8A509871B188 /* ScanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewModel.swift; sourceTree = "<group>"; };
-		EA1C9B469ADAB56C46E90B9C /* DuplicatePhotos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuplicatePhotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA1C9B469ADAB56C46E90B9C /* DuplicatePhotos.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DuplicatePhotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3E30295E257A7A77E5D4E57 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FFB88BF9E0181B7A152E2315 /* DuplicatePhotosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatePhotosApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -149,6 +153,8 @@
 			isa = PBXGroup;
 			children = (
 				F3E30295E257A7A77E5D4E57 /* ContentView.swift */,
+				BF1D81DA3D9007743CE96E57 /* DuplicateGroupsListView.swift */,
+				1E5CCE87A184C6811EF89986 /* GroupDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -227,12 +233,8 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2620;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
-					0B1A7C2C58D92801B2895570 = {
-						DevelopmentTeam = "";
-						ProvisioningStyle = Automatic;
-					};
 					81FF4E39DFB3A1ADB155FD56 = {
 						TestTargetID = 0B1A7C2C58D92801B2895570;
 					};
@@ -248,6 +250,7 @@
 			);
 			mainGroup = 6617AA73B23B713AC4157CED;
 			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -286,8 +289,10 @@
 				DFD0426609FF8C11EA0046FE /* ContentView.swift in Sources */,
 				EFED8E5DFEBCE84EE8368D8F /* DuplicateDetector.swift in Sources */,
 				6183A5A495C0911919FC0EE7 /* DuplicateGroup.swift in Sources */,
+				35D766613BB658E2479D4A87 /* DuplicateGroupsListView.swift in Sources */,
 				DFD4068B60A90B1984D7EC3E /* DuplicatePhotosApp.swift in Sources */,
 				B1297B2E3ACF0FCC45E24D05 /* EmbeddingService.swift in Sources */,
+				48B24734114A3B7848738A5D /* GroupDetailView.swift in Sources */,
 				040598B99DF64EC3EF7913E8 /* PhotoAsset.swift in Sources */,
 				9728F31BA7F8DC9078228749 /* PhotoLibraryService.swift in Sources */,
 				FB720E7E733B8BBA3B25F754 /* ScanSettings.swift in Sources */,
@@ -356,7 +361,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -377,7 +381,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
@@ -438,7 +441,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -452,7 +454,6 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 6.0;
@@ -464,8 +465,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = DuplicatePhotos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -518,8 +517,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = DuplicatePhotos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -17,8 +17,12 @@ class ScanViewModel: ObservableObject {
     @Published var duplicateGroups: [DuplicateGroup] = []
     @Published var errorMessage: String?
 
-    private let detector = DuplicateDetector()
+    private lazy var detector = DuplicateDetector()
     private let settings = ScanSettings.default
+
+    init() {
+        print("✅ ScanViewModel initialized")
+    }
 
     func startScan() async {
         isScanning = true
