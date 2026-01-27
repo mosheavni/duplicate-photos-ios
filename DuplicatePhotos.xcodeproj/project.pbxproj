@@ -23,6 +23,7 @@
 		DFD4068B60A90B1984D7EC3E /* DuplicatePhotosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB88BF9E0181B7A152E2315 /* DuplicatePhotosApp.swift */; };
 		EFED8E5DFEBCE84EE8368D8F /* DuplicateDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94112D1F4662166C4010CC26 /* DuplicateDetector.swift */; };
 		FB720E7E733B8BBA3B25F754 /* ScanSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AC9F74AA6AFB8011801E36 /* ScanSettings.swift */; };
+		996CAF5B49052A7FDD333BB3 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50833F0BB177A4F0D57BCB0 /* ToastView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		F3E30295E257A7A77E5D4E57 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F80A4C4BF7F51372A3714670 /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FFB88BF9E0181B7A152E2315 /* DuplicatePhotosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatePhotosApp.swift; sourceTree = "<group>"; };
+		E50833F0BB177A4F0D57BCB0 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -158,6 +160,7 @@
 				BF1D81DA3D9007743CE96E57 /* DuplicateGroupsListView.swift */,
 				1E5CCE87A184C6811EF89986 /* GroupDetailView.swift */,
 				F80A4C4BF7F51372A3714670 /* SettingsView.swift */,
+				E50833F0BB177A4F0D57BCB0 /* ToastView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				9EC09E232DE342E2B7081C2F /* ScanViewModel.swift in Sources */,
 				4FDE1FE660019229B6986E82 /* SimilarityService.swift in Sources */,
 				A761937E352ED1A883EABE2A /* SettingsView.swift in Sources */,
+				996CAF5B49052A7FDD333BB3 /* ToastView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
