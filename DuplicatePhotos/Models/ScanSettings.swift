@@ -9,8 +9,12 @@ import Foundation
 
 /// Configuration settings for duplicate detection
 struct ScanSettings {
-    /// Similarity threshold (0.0 to 1.0). Default: 0.80 (lowered for testing)
-    var similarityThreshold: Float = 0.80
+    /// Similarity threshold (0.0 to 1.0)
+    /// - 0.98+: Exact duplicates only
+    /// - 0.90-0.95: Near-duplicates (recommended)
+    /// - 0.80-0.90: Similar photos (may include burst sequences)
+    /// Default: 0.92 for near-duplicate detection
+    var similarityThreshold: Float = 0.92
 
     /// Maximum number of photos to process in one batch
     var batchSize: Int = 100
