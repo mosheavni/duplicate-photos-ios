@@ -69,19 +69,29 @@ Plans:
 
 **Why third:** This is the primary user action after viewing results. High value, low complexity.
 
+**Plans:** 2 plans
+
+Plans:
+- [ ] 72-01-PLAN.md — Quality scoring and model enhancements for auto-selection
+- [ ] 72-02-PLAN.md — UI batch deletion with toast feedback and bulk delete
+
 ### Requirements Addressed
 - (implied) Efficient duplicate management
 
 ### Success Criteria
-- [ ] "Delete all but first" button in group detail view
-- [ ] Confirmation dialog before batch delete
+- [ ] Auto-select best photo to keep (quality heuristics)
+- [ ] Single-tap "delete duplicates" in group detail view
+- [ ] Bulk "Delete All" with confirmation dialog
+- [ ] Toast feedback after deletion
 - [ ] Photos moved to Recently Deleted (iOS handles recovery)
-- [ ] UI updates after deletion
+- [ ] UI updates immediately after deletion
 
 ### Approach
-1. Add batch delete action to GroupDetailView
-2. Use PHPhotoLibrary.shared().performChanges for atomic deletion
-3. Update duplicateGroups state after deletion
+1. Add quality scoring to PhotoAsset (resolution, file size, recency)
+2. Add selection helpers to DuplicateGroup (bestPhoto, photosToDelete)
+3. Enhance GroupDetailView with auto-select and immediate delete
+4. Add bulk delete to DuplicateGroupsListView with confirmation
+5. Integrate AlertToast for feedback
 
 ---
 
