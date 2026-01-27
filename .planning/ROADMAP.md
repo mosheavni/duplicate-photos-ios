@@ -72,19 +72,19 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 72-01-PLAN.md — Quality scoring and model enhancements for auto-selection
-- [ ] 72-02-PLAN.md — UI batch deletion with toast feedback and bulk delete
+- [x] 72-01-PLAN.md — Quality scoring and model enhancements for auto-selection
+- [x] 72-02-PLAN.md — UI batch deletion with toast feedback and bulk delete
 
 ### Requirements Addressed
 - (implied) Efficient duplicate management
 
 ### Success Criteria
-- [ ] Auto-select best photo to keep (quality heuristics)
-- [ ] Single-tap "delete duplicates" in group detail view
-- [ ] Bulk "Delete All" with confirmation dialog
-- [ ] Toast feedback after deletion
-- [ ] Photos moved to Recently Deleted (iOS handles recovery)
-- [ ] UI updates immediately after deletion
+- [x] Auto-select best photo to keep (quality heuristics)
+- [x] Single-tap "delete duplicates" in group detail view
+- [x] Bulk "Delete All" with confirmation dialog
+- [x] Toast feedback after deletion
+- [x] Photos moved to Recently Deleted (iOS handles recovery)
+- [x] UI updates immediately after deletion
 
 ### Approach
 1. Add quality scoring to PhotoAsset (resolution, file size, recency)
@@ -123,7 +123,7 @@ Phase 70 (Fix Embeddings) [COMPLETE]
     |
 Phase 71 (Settings) [COMPLETE] <--+
     |                  |
-Phase 72 (Batch Ops)   | Can start after 70
+Phase 72 (Batch Ops) [COMPLETE]   |
     |                  |
 Phase 73 (Polish) -----+
 ```
@@ -148,7 +148,7 @@ These are deferred to v1.1+ after core functionality is validated.
 |-------|--------|---------|-----------|
 | 70 | complete | 2026-01-27 | 2026-01-27 |
 | 71 | complete | 2026-01-27 | 2026-01-27 |
-| 72 | pending | - | - |
+| 72 | complete | 2026-01-27 | 2026-01-27 |
 | 73 | pending | - | - |
 
 ---

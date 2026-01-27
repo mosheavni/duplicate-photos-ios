@@ -6,9 +6,9 @@
 
 ## Current Phase
 
-**Phase 72: Batch Operations**
+**Phase 73: Polish and Testing**
 
-Status: `in progress` 🚧
+Status: `pending`
 
 ---
 
@@ -24,6 +24,8 @@ Status: `in progress` 🚧
 | 2026-01-27 | **Phase 71-01 completed** - Settings screen with persisted threshold |
 | 2026-01-27 | **Phase 71-02 completed** - Auto-start scan fix (gap closure) |
 | 2026-01-27 | **Phase 72-01 completed** - Quality scoring and selection helpers |
+| 2026-01-27 | **Phase 72-02 completed** - Selection-first batch deletion UX |
+| 2026-01-27 | **Phase 72 verified** - All must-haves confirmed |
 
 ---
 
@@ -55,6 +57,9 @@ Status: `in progress` 🚧
 | Conditional isEmpty check | Prevents re-scan on back navigation while allowing first-appear scan | 2026-01-27 |
 | Quality score weights | 50% resolution, 30% file size, 20% recency for best photo selection | 2026-01-27 |
 | Normalization limits | 100MP max, 50MB max, 1 year recency for score normalization | 2026-01-27 |
+| Selection-first UX | User feedback: "Merge Groups" flow clearer than "Delete All" button | 2026-01-27 |
+| Native ToastView | AlertToast has Swift 6 compatibility issues, built native SwiftUI toast | 2026-01-27 |
+| nonisolated for PHPhotoLibrary | Required to break @MainActor inheritance for Swift 6 strict concurrency | 2026-01-27 |
 
 ---
 
@@ -89,4 +94,4 @@ Status: `in progress` 🚧
 
 ## Next Action
 
-Phase 72-01 complete. Quality scoring and selection helpers implemented. Ready for 72-02: UI implementation with "Delete All" button.
+Phase 72 complete. Batch operations with selection-first UX implemented. Ready for Phase 73: Polish and Testing.
