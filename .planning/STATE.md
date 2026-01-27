@@ -21,7 +21,8 @@ Status: `completed` ✅
 | 2026-01-27 | Root cause identified: 768 vs 512 dimension mismatch |
 | 2026-01-27 | ROADMAP.md created with 4 phases |
 | 2026-01-27 | **Phase 70 completed** - Fixed embedding extraction |
-| 2026-01-27 | **Phase 71 completed** - Settings screen with persisted threshold |
+| 2026-01-27 | **Phase 71-01 completed** - Settings screen with persisted threshold |
+| 2026-01-27 | **Phase 71-02 completed** - Auto-start scan fix (gap closure) |
 
 ---
 
@@ -34,6 +35,7 @@ Status: `completed` ✅
 - ~~Git LFS not tracking large files~~ (fixed)
 - ~~Xcode LLDB debugging not working~~ (fixed)
 - ~~Scan returns "No duplicates found"~~ (fixed - CPU-only inference + Float16 handling)
+- ~~UAT test #8: First click shows empty state~~ (fixed - .task auto-start on ScanView appear)
 
 ---
 
@@ -48,16 +50,19 @@ Status: `completed` ✅
 | @AppStorage for threshold | Automatic UI sync, thread-safe, standard iOS pattern | 2026-01-27 |
 | Form for settings layout | Proper iOS styling for input controls vs List for data | 2026-01-27 |
 | Threshold as computed property | Single source of truth, scans auto-use user preference | 2026-01-27 |
+| .task modifier for auto-start | Best practice for async on view appear, handles cancellation | 2026-01-27 |
+| Conditional isEmpty check | Prevents re-scan on back navigation while allowing first-appear scan | 2026-01-27 |
 
 ---
 
 ## Files Modified This Session
 
-- `DuplicatePhotos/Views/SettingsView.swift` - Created settings UI (Phase 71)
-- `DuplicatePhotos/Views/ContentView.swift` - Added gear icon toolbar (Phase 71)
-- `DuplicatePhotos/Models/ScanSettings.swift` - UserDefaults integration (Phase 71)
-- `DuplicatePhotos.xcodeproj/project.pbxproj` - Added SettingsView (Phase 71)
+- `DuplicatePhotos/Views/SettingsView.swift` - Created settings UI (Phase 71-01)
+- `DuplicatePhotos/Views/ContentView.swift` - Added gear icon toolbar (Phase 71-01), auto-start scan (Phase 71-02)
+- `DuplicatePhotos/Models/ScanSettings.swift` - UserDefaults integration (Phase 71-01)
+- `DuplicatePhotos.xcodeproj/project.pbxproj` - Added SettingsView (Phase 71-01)
 - `.planning/phases/71-settings-screen/71-01-SUMMARY.md` - Created
+- `.planning/phases/71-settings-screen/71-02-SUMMARY.md` - Created
 
 ---
 
@@ -72,9 +77,9 @@ Status: `completed` ✅
 ## Session Continuity
 
 **Last session:** 2026-01-27
-**Stopped at:** Completed 71-01-PLAN.md
+**Stopped at:** Completed 71-02-PLAN.md (gap closure)
 **Resume file:** None
 
 ## Next Action
 
-Phase 71 complete. Settings screen fully functional with persisted threshold, cache management, and navigation.
+Phase 71 complete. Gap closure fixed auto-start scan bug. Ready to re-run UAT test #8 to verify two-click behavior eliminated.
