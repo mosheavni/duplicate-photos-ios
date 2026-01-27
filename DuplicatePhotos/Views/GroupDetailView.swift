@@ -10,9 +10,13 @@ import Photos
 
 struct GroupDetailView: View {
     let group: DuplicateGroup
+    var onGroupDeleted: ((UUID) -> Void)?
+
     @State private var selectedPhotos: Set<String> = []
-    @State private var showDeleteConfirmation = false
     @State private var isDeleting = false
+    @State private var showToast = false
+    @State private var toastMessage = ""
+    @State private var toastType: ToastView.ToastType = .success
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -38,7 +42,8 @@ struct GroupDetailView: View {
                     ForEach(group.photos) { photo in
                         PhotoThumbnailView(
                             photo: photo,
-                            isSelected: selectedPhotos.contains(photo.id)
+                            isSelected: selectedPhotos.contains(photo.id),
+                            isBest: photo.id == group.bestPhoto?.id
                         ) {
                             toggleSelection(photo.id)
                         }
@@ -49,9 +54,9 @@ struct GroupDetailView: View {
                 // Action buttons
                 VStack(spacing: 12) {
                     Button {
-                        selectAllExceptBest()
+                        selectedPhotos = group.photosToDeleteIds
                     } label: {
-                        Label("Keep Best, Delete Others", systemImage: "checkmark.circle")
+                        Label("Select Duplicates", systemImage: "checkmark.circle")
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.bordered)
@@ -59,7 +64,9 @@ struct GroupDetailView: View {
 
                     if !selectedPhotos.isEmpty {
                         Button(role: .destructive) {
-                            showDeleteConfirmation = true
+                            Task {
+                                await deleteSelectedPhotos()
+                            }
                         } label: {
                             Label("Delete \(selectedPhotos.count) Selected", systemImage: "trash")
                                 .frame(maxWidth: .infinity)
@@ -81,20 +88,11 @@ struct GroupDetailView: View {
         }
         .navigationTitle("Duplicate Group")
         .navigationBarTitleDisplayMode(.inline)
-        .confirmationDialog(
-            "Delete \(selectedPhotos.count) photos?",
-            isPresented: $showDeleteConfirmation,
-            titleVisibility: .visible
-        ) {
-            Button("Delete", role: .destructive) {
-                Task {
-                    await deleteSelectedPhotos()
-                }
-            }
-            Button("Cancel", role: .cancel) {}
-        } message: {
-            Text("This action cannot be undone.")
+        .onAppear {
+            // Auto-select duplicates (all except best)
+            selectedPhotos = group.photosToDeleteIds
         }
+        .toast(isPresenting: $showToast, message: toastMessage, type: toastType, duration: 2.0)
     }
 
     private func toggleSelection(_ photoId: String) {
@@ -105,25 +103,32 @@ struct GroupDetailView: View {
         }
     }
 
-    private func selectAllExceptBest() {
-        // Select all except the first photo (highest quality/most recent)
-        selectedPhotos = Set(group.photos.dropFirst().map { $0.id })
-    }
-
     private func deleteSelectedPhotos() async {
         isDeleting = true
 
         let photosToDelete = group.photos.filter { selectedPhotos.contains($0.id) }
         let assets = photosToDelete.map { $0.phAsset }
+        let deleteCount = assets.count
 
         do {
             try await PHPhotoLibrary.shared().performChanges {
                 PHAssetChangeRequest.deleteAssets(assets as NSArray)
             }
 
-            // If all photos in group are deleted, dismiss
-            if selectedPhotos.count == group.count {
+            await MainActor.run {
+                toastMessage = "Deleted \(deleteCount) photo\(deleteCount == 1 ? "" : "s")"
+                toastType = .success
+                withAnimation {
+                    showToast = true
+                }
+            }
+
+            // Notify parent to remove group if all duplicates deleted
+            if selectedPhotos.count == group.photosToDelete.count {
+                // Wait for toast to show before dismissing
+                try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
                 await MainActor.run {
+                    onGroupDeleted?(group.id)
                     dismiss()
                 }
             } else {
@@ -132,16 +137,25 @@ struct GroupDetailView: View {
                 }
             }
         } catch {
-            print("❌ Failed to delete photos: \(error)")
+            await MainActor.run {
+                toastMessage = "Delete failed: \(error.localizedDescription)"
+                toastType = .error
+                withAnimation {
+                    showToast = true
+                }
+            }
         }
 
-        isDeleting = false
+        await MainActor.run {
+            isDeleting = false
+        }
     }
 }
 
 struct PhotoThumbnailView: View {
     let photo: PhotoAsset
     let isSelected: Bool
+    let isBest: Bool
     let onTap: () -> Void
 
     @State private var image: UIImage?
@@ -176,6 +190,23 @@ struct PhotoThumbnailView: View {
                     .font(.title2)
                     .foregroundStyle(.white, .blue)
                     .padding(8)
+            }
+
+            // Best photo indicator (star badge)
+            if isBest {
+                VStack {
+                    HStack {
+                        Image(systemName: "star.fill")
+                            .font(.caption)
+                            .foregroundStyle(.yellow)
+                            .padding(6)
+                            .background(.ultraThinMaterial)
+                            .clipShape(Circle())
+                        Spacer()
+                    }
+                    Spacer()
+                }
+                .padding(8)
             }
 
             // Metadata overlay
@@ -240,7 +271,7 @@ struct PhotoThumbnailView: View {
         // Get dimensions
         let width = photo.phAsset.pixelWidth
         let height = photo.phAsset.pixelHeight
-        dimensions = "\(width)×\(height)"
+        dimensions = "\(width)x\(height)"
 
         // Get file size
         let resources = PHAssetResource.assetResources(for: photo.phAsset)
