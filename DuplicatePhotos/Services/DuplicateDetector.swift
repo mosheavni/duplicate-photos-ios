@@ -22,11 +22,16 @@ actor DuplicateDetector {
         settings: ScanSettings = .default,
         progress: ProgressHandler? = nil
     ) async throws -> [DuplicateGroup] {
+        print("🚀 Starting duplicate scan...")
+        print("⚙️ Settings: threshold=\(settings.similarityThreshold), caching=\(settings.useCaching)")
+
         // 1. Request photo library access
-        _ = try await photoLibrary.requestAuthorization()
+        let authStatus = try await photoLibrary.requestAuthorization()
+        print("🔐 Photo library authorization: \(authStatus.rawValue)")
 
         // 2. Fetch all photos
         let assets = try await photoLibrary.fetchAllPhotos()
+        print("📷 Fetched \(assets.count) photos from library")
         progress?(0, assets.count)
 
         // 3. Extract embeddings (with caching)
@@ -71,14 +76,21 @@ actor DuplicateDetector {
             progress?(index + 1, assets.count)
         }
 
+        print("📊 Total photos with embeddings: \(photoAssets.count)")
+        let validEmbeddings = photoAssets.filter { $0.embedding != nil }.count
+        print("✅ Valid embeddings: \(validEmbeddings)")
+
         // 4. Find similar pairs
+        print("🔍 Finding similar pairs (threshold: \(settings.similarityThreshold))...")
         let similarPairs = await similarity.findSimilarPairs(
             photos: photoAssets,
             threshold: settings.similarityThreshold
         )
+        print("🎯 Found \(similarPairs.count) similar pairs")
 
         // 5. Group into duplicate sets using connected components
         let finalGroups = reconstructGroups(from: similarPairs, photos: photoAssets)
+        print("📦 Grouped into \(finalGroups.count) duplicate groups")
 
         return finalGroups
     }

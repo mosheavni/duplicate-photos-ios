@@ -25,6 +25,7 @@ class ScanViewModel: ObservableObject {
     }
 
     func startScan() async {
+        print("🎬 ScanViewModel: Starting scan...")
         isScanning = true
         progress = 0.0
         errorMessage = nil
@@ -39,12 +40,15 @@ class ScanViewModel: ObservableObject {
                 }
             }
 
+            print("🎬 ScanViewModel: Scan complete, found \(groups.count) groups")
             duplicateGroups = groups
         } catch {
+            print("❌ ScanViewModel: Scan failed with error: \(error)")
             errorMessage = "Scan failed: \(error.localizedDescription)"
         }
 
         isScanning = false
+        print("🎬 ScanViewModel: isScanning set to false")
     }
 
     func clearCache() async {
