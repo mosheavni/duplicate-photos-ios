@@ -6,7 +6,7 @@
 
 ## Current Phase
 
-**Phase 70: Fix Embedding Dimension Mismatch**
+**Phase 71: Settings Screen**
 
 Status: `completed` ✅
 
@@ -21,6 +21,7 @@ Status: `completed` ✅
 | 2026-01-27 | Root cause identified: 768 vs 512 dimension mismatch |
 | 2026-01-27 | ROADMAP.md created with 4 phases |
 | 2026-01-27 | **Phase 70 completed** - Fixed embedding extraction |
+| 2026-01-27 | **Phase 71 completed** - Settings screen with persisted threshold |
 
 ---
 
@@ -44,16 +45,19 @@ Status: `completed` ✅
 | Manual Float16 conversion | MLMultiArray subscript doesn't handle Float16 well | 2026-01-27 |
 | Default threshold 0.92 | Research suggests 0.90-0.95 for near-duplicates | 2026-01-27 |
 | Cache version 4 | Invalidate old 512-dim cached embeddings | 2026-01-27 |
+| @AppStorage for threshold | Automatic UI sync, thread-safe, standard iOS pattern | 2026-01-27 |
+| Form for settings layout | Proper iOS styling for input controls vs List for data | 2026-01-27 |
+| Threshold as computed property | Single source of truth, scans auto-use user preference | 2026-01-27 |
 
 ---
 
 ## Files Modified This Session
 
-- `DuplicatePhotos/Services/EmbeddingService.swift` - CPU-only, 768-dim, Float16
-- `DuplicatePhotos/Services/CacheService.swift` - Version tracking
-- `DuplicatePhotos/Services/DuplicateDetector.swift` - Cache clearing
-- `DuplicatePhotos/Models/ScanSettings.swift` - Threshold 0.92
-- `.planning/phases/70-*/70-01-SUMMARY.md` - Created
+- `DuplicatePhotos/Views/SettingsView.swift` - Created settings UI (Phase 71)
+- `DuplicatePhotos/Views/ContentView.swift` - Added gear icon toolbar (Phase 71)
+- `DuplicatePhotos/Models/ScanSettings.swift` - UserDefaults integration (Phase 71)
+- `DuplicatePhotos.xcodeproj/project.pbxproj` - Added SettingsView (Phase 71)
+- `.planning/phases/71-settings-screen/71-01-SUMMARY.md` - Created
 
 ---
 
@@ -65,6 +69,12 @@ Status: `completed` ✅
 
 ---
 
+## Session Continuity
+
+**Last session:** 2026-01-27
+**Stopped at:** Completed 71-01-PLAN.md
+**Resume file:** None
+
 ## Next Action
 
-Phase 70 complete. Ready for next phase (71: Improve UI/UX) or commit changes.
+Phase 71 complete. Settings screen fully functional with persisted threshold, cache management, and navigation.
