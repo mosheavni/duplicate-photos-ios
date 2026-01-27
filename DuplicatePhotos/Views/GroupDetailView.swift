@@ -151,9 +151,12 @@ struct GroupDetailView: View {
     private func deleteSelectedPhotos() async {
         isDeleting = true
 
-        let photosToDelete = group.photos.filter { selectedPhotos.contains($0.id) }
+        // Capture all data BEFORE async work to avoid @State access from background queue
+        let currentSelectedPhotos = localSelectedPhotos
+        let photosToDelete = group.photos.filter { currentSelectedPhotos.contains($0.id) }
         let assets = photosToDelete.map { $0.phAsset }
         let deleteCount = assets.count
+        let willDeleteAllDuplicates = currentSelectedPhotos.count == group.photosToDelete.count
 
         do {
             try await PHPhotoLibrary.shared().performChanges {
@@ -169,7 +172,7 @@ struct GroupDetailView: View {
             }
 
             // Notify parent to remove group if all duplicates deleted
-            if localSelectedPhotos.count == group.photosToDelete.count {
+            if willDeleteAllDuplicates {
                 // Wait for toast to show before dismissing
                 try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
                 await MainActor.run {

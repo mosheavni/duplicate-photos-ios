@@ -219,9 +219,10 @@ struct DuplicateGroupsListView: View {
 
     private func mergeSelectedGroups() async {
         isDeleting = true
-        var totalDeleted = 0
-        var errors: [Error] = []
-        var deletedPhotoIds: Set<String> = []
+
+        // Capture all data we need BEFORE any async work (we're on main actor here)
+        // This avoids accessing @State from background queues after PHPhotoLibrary returns
+        var groupsToProcess: [(group: DuplicateGroup, photoIdsToDelete: Set<String>, assets: [PHAsset])] = []
 
         for groupId in selectedGroupIds {
             guard let group = viewModel.duplicateGroups.first(where: { $0.id == groupId }),
@@ -229,13 +230,21 @@ struct DuplicateGroupsListView: View {
 
             let photosToDelete = group.photos.filter { selectedPhotoIds.contains($0.id) }
             let assets = photosToDelete.map { $0.phAsset }
+            groupsToProcess.append((group, selectedPhotoIds, assets))
+        }
 
+        // Now do the async work with captured data
+        var totalDeleted = 0
+        var errors: [Error] = []
+        var deletedPhotoIds: Set<String> = []
+
+        for (_, photoIdsToDelete, assets) in groupsToProcess {
             do {
                 try await PHPhotoLibrary.shared().performChanges {
                     PHAssetChangeRequest.deleteAssets(assets as NSArray)
                 }
                 totalDeleted += assets.count
-                deletedPhotoIds.formUnion(selectedPhotoIds)
+                deletedPhotoIds.formUnion(photoIdsToDelete)
             } catch {
                 errors.append(error)
             }
