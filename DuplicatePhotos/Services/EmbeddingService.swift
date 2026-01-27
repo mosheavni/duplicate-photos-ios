@@ -20,7 +20,7 @@ actor EmbeddingService {
     }
 
     private var model: VNCoreMLModel?
-    private let embeddingDimension = 512
+    private let embeddingDimension = 768  // Actual model output dimension
     private var isModelLoaded = false
 
     /// Load the CoreML model if not already loaded
@@ -70,12 +70,37 @@ actor EmbeddingService {
             throw EmbeddingError.predictionFailed
         }
 
-        print("✅ Embedding extracted, dimension: \(multiArray.count)")
+        // Log shape information for debugging
+        print("📊 MLMultiArray shape: \(multiArray.shape), count: \(multiArray.count)")
 
         // Convert MLMultiArray to [Float]
         var embedding = [Float](repeating: 0, count: embeddingDimension)
-        for i in 0..<embeddingDimension {
-            embedding[i] = Float(truncating: multiArray[i])
+
+        // Handle potential batch dimension
+        if multiArray.shape.count == 2 {
+            // Shape is [1, 768] - has batch dimension
+            print("🔢 Detected 2D shape with batch dimension")
+            for i in 0..<embeddingDimension {
+                embedding[i] = Float(truncating: multiArray[[0, i] as [NSNumber]])
+            }
+        } else {
+            // Shape is [768] - flat array
+            print("🔢 Detected 1D shape")
+            for i in 0..<embeddingDimension {
+                embedding[i] = Float(truncating: multiArray[i])
+            }
+        }
+
+        // Log embedding diagnostics (before normalization)
+        let firstFive = Array(embedding.prefix(5))
+        let lastFive = Array(embedding.suffix(5))
+        print("🔍 Raw embedding - First 5: \(firstFive), Last 5: \(lastFive)")
+
+        let magnitude = sqrt(embedding.reduce(0) { $0 + ($1 * $1) })
+        print("📏 Raw embedding magnitude: \(magnitude)")
+
+        if magnitude < 0.001 {
+            print("⚠️ WARNING: Embedding magnitude near zero - may indicate corrupted embeddings")
         }
 
         // Normalize the embedding
