@@ -40,10 +40,11 @@ Plans:
 
 **Why second:** Once scan works, threshold adjustment lets users fine-tune detection sensitivity.
 
-**Plans:** 1 plan
+**Plans:** 2 plans
 
 Plans:
 - [x] 71-01-PLAN.md — SettingsView with threshold slider, cache management, about section
+- [x] 71-02-PLAN.md — Auto-start scan on ScanView appear (gap closure)
 
 ### Requirements Addressed
 - UI-01: Settings screen with adjustable similarity threshold
