@@ -143,57 +143,20 @@ struct EmptyScanView: View {
     @ObservedObject var viewModel: ScanViewModel
 
     var body: some View {
-        VStack(spacing: 24) {
-            Spacer()
-
-            Image(systemName: "checkmark.circle")
-                .font(.system(size: 80))
-                .foregroundStyle(.green.gradient)
-
-            VStack(spacing: 8) {
-                Text("No Duplicates Found")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-
-                Text("Your photo library looks clean!")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
-
-            // Show diagnostic info for debugging
-            if let diag = viewModel.diagnosticInfo {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Debug Info:")
-                        .font(.caption)
-                        .fontWeight(.bold)
-                    Text(diag)
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                }
-                .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-                .padding(.horizontal)
-            }
-
-            Spacer()
-
+        ContentUnavailableView {
+            Label("No Duplicates Found", systemImage: "checkmark.circle")
+        } description: {
+            Text("Your photo library looks clean! All your photos appear to be unique.")
+        } actions: {
             Button {
                 Task {
                     await viewModel.startScan()
                 }
             } label: {
-                Label("Scan Again", systemImage: "arrow.clockwise")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue.gradient)
-                    .cornerRadius(12)
+                Text("Scan Again")
             }
-            .padding(.horizontal)
+            .buttonStyle(.borderedProminent)
         }
-        .padding()
         .navigationTitle("Scan Results")
     }
 }
