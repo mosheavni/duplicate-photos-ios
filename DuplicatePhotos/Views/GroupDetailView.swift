@@ -151,45 +151,55 @@ struct GroupDetailView: View {
     private func deleteSelectedPhotos() async {
         isDeleting = true
 
-        // Capture all data BEFORE async work to avoid @State access from background queue
+        // Capture asset identifiers (Sendable strings) instead of PHAsset objects
+        // This avoids Swift 6 actor isolation issues when crossing to PHPhotoLibrary's queue
         let currentSelectedPhotos = localSelectedPhotos
         let photosToDelete = group.photos.filter { currentSelectedPhotos.contains($0.id) }
-        let assets = photosToDelete.map { $0.phAsset }
-        let deleteCount = assets.count
+        let assetIdentifiers = photosToDelete.map { $0.phAsset.localIdentifier }
+        let deleteCount = assetIdentifiers.count
         let willDeleteAllDuplicates = currentSelectedPhotos.count == group.photosToDelete.count
+        let groupId = group.id
 
+        // Copy identifiers to a local constant to make it Sendable
+        let identifiersToDelete = assetIdentifiers
+        var deleteError: Error?
         do {
             try await PHPhotoLibrary.shared().performChanges {
-                PHAssetChangeRequest.deleteAssets(assets as NSArray)
+                // Fetch assets fresh inside the closure - this runs on PHPhotoLibrary's queue
+                let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifiersToDelete, options: nil)
+                // Use fetchResult directly with deleteAssets
+                PHAssetChangeRequest.deleteAssets(fetchResult)
             }
+        } catch {
+            deleteError = error
+        }
 
-            await MainActor.run {
+        // Update UI on main actor
+        await MainActor.run {
+            if deleteError == nil {
                 toastMessage = "Deleted \(deleteCount) photo\(deleteCount == 1 ? "" : "s")"
                 toastType = .success
-                withAnimation {
-                    showToast = true
-                }
+            } else {
+                toastMessage = "Delete failed: \(deleteError!.localizedDescription)"
+                toastType = .error
             }
+            withAnimation {
+                showToast = true
+            }
+        }
 
-            // Notify parent to remove group if all duplicates deleted
+        // Handle post-delete navigation
+        if deleteError == nil {
             if willDeleteAllDuplicates {
                 // Wait for toast to show before dismissing
                 try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
                 await MainActor.run {
-                    onGroupDeleted?(group.id)
+                    onGroupDeleted?(groupId)
                     dismiss()
                 }
             } else {
                 await MainActor.run {
                     localSelectedPhotos.removeAll()
-                }
-            }
-        } catch {
-            await MainActor.run {
-                toastMessage = "Delete failed: \(error.localizedDescription)"
-                toastType = .error
-                withAnimation {
-                    showToast = true
                 }
             }
         }

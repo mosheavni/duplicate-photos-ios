@@ -220,45 +220,48 @@ struct DuplicateGroupsListView: View {
     private func mergeSelectedGroups() async {
         isDeleting = true
 
-        // Capture all data we need BEFORE any async work (we're on main actor here)
-        // This avoids accessing @State from background queues after PHPhotoLibrary returns
-        var groupsToProcess: [(group: DuplicateGroup, photoIdsToDelete: Set<String>, assets: [PHAsset])] = []
+        // Capture asset identifiers (Sendable strings) instead of PHAsset objects
+        // This avoids Swift 6 actor isolation issues when crossing to PHPhotoLibrary's queue
+        var assetIdentifiersToDelete: [String] = []
+        var photoIdsToDelete: Set<String> = []
 
         for groupId in selectedGroupIds {
             guard let group = viewModel.duplicateGroups.first(where: { $0.id == groupId }),
                   let selectedPhotoIds = photoSelections[groupId] else { continue }
 
             let photosToDelete = group.photos.filter { selectedPhotoIds.contains($0.id) }
-            let assets = photosToDelete.map { $0.phAsset }
-            groupsToProcess.append((group, selectedPhotoIds, assets))
+            assetIdentifiersToDelete.append(contentsOf: photosToDelete.map { $0.phAsset.localIdentifier })
+            photoIdsToDelete.formUnion(selectedPhotoIds)
         }
 
-        // Now do the async work with captured data
-        var totalDeleted = 0
-        var errors: [Error] = []
-        var deletedPhotoIds: Set<String> = []
+        let totalToDelete = assetIdentifiersToDelete.count
 
-        for (_, photoIdsToDelete, assets) in groupsToProcess {
-            do {
-                try await PHPhotoLibrary.shared().performChanges {
-                    PHAssetChangeRequest.deleteAssets(assets as NSArray)
-                }
-                totalDeleted += assets.count
-                deletedPhotoIds.formUnion(photoIdsToDelete)
-            } catch {
-                errors.append(error)
+        // Perform deletion with fresh PHAsset fetch inside the closure
+        // This keeps PHPhotoLibrary operations entirely on its own queue
+        // Copy identifiers to a local constant to make it Sendable
+        let identifiersToDelete = assetIdentifiersToDelete
+        var deleteError: Error?
+        do {
+            try await PHPhotoLibrary.shared().performChanges {
+                // Fetch assets fresh inside the closure - this runs on PHPhotoLibrary's queue
+                let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifiersToDelete, options: nil)
+                // Use fetchResult directly with deleteAssets
+                PHAssetChangeRequest.deleteAssets(fetchResult)
             }
+        } catch {
+            deleteError = error
         }
 
+        // Update UI on main actor
         await MainActor.run {
             // Remove deleted photos from groups (handles partial deletion)
-            viewModel.removePhotosFromGroups(photoIds: deletedPhotoIds)
+            viewModel.removePhotosFromGroups(photoIds: photoIdsToDelete)
 
-            if errors.isEmpty {
-                toastMessage = "Merged! Deleted \(totalDeleted) duplicate\(totalDeleted == 1 ? "" : "s")"
+            if deleteError == nil {
+                toastMessage = "Merged! Deleted \(totalToDelete) duplicate\(totalToDelete == 1 ? "" : "s")"
                 toastType = .success
             } else {
-                toastMessage = "Deleted \(totalDeleted), \(errors.count) group\(errors.count == 1 ? "" : "s") failed"
+                toastMessage = "Delete failed: \(deleteError!.localizedDescription)"
                 toastType = .error
             }
             withAnimation {
