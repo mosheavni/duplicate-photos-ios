@@ -43,16 +43,16 @@ Plans:
 **Plans:** 1 plan
 
 Plans:
-- [ ] 71-01-PLAN.md — SettingsView with threshold slider, cache management, about section
+- [x] 71-01-PLAN.md — SettingsView with threshold slider, cache management, about section
 
 ### Requirements Addressed
 - UI-01: Settings screen with adjustable similarity threshold
 
 ### Success Criteria
-- [ ] Settings view accessible from main screen
-- [ ] Slider to adjust threshold (0.85 - 0.98, default 0.92)
-- [ ] Threshold persists between app launches
-- [ ] Scan uses user-selected threshold
+- [x] Settings view accessible from main screen
+- [x] Slider to adjust threshold (0.85 - 0.98, default 0.92)
+- [x] Threshold persists between app launches
+- [x] Scan uses user-selected threshold
 
 ### Approach
 1. Create SettingsView with SwiftUI slider
@@ -110,7 +110,7 @@ Plans:
 ```
 Phase 70 (Fix Embeddings) [COMPLETE]
     |
-Phase 71 (Settings) <--+
+Phase 71 (Settings) [COMPLETE] <--+
     |                  |
 Phase 72 (Batch Ops)   | Can start after 70
     |                  |
@@ -136,7 +136,7 @@ These are deferred to v1.1+ after core functionality is validated.
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
 | 70 | complete | 2026-01-27 | 2026-01-27 |
-| 71 | planned | - | - |
+| 71 | complete | 2026-01-27 | 2026-01-27 |
 | 72 | pending | - | - |
 | 73 | pending | - | - |
 
