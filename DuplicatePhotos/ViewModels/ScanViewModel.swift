@@ -8,6 +8,14 @@
 import Foundation
 import SwiftUI
 
+enum PermissionState {
+    case notDetermined
+    case authorized
+    case limited
+    case denied
+    case restricted
+}
+
 @MainActor
 class ScanViewModel: ObservableObject {
     @Published var isScanning = false
@@ -17,6 +25,7 @@ class ScanViewModel: ObservableObject {
     @Published var duplicateGroups: [DuplicateGroup] = []
     @Published var errorMessage: String?
     @Published var diagnosticInfo: String?  // Shows max similarity for debugging
+    @Published var permissionState: PermissionState = .notDetermined
 
     private lazy var detector = DuplicateDetector()
     private var settings = ScanSettings.default
@@ -31,6 +40,7 @@ class ScanViewModel: ObservableObject {
         progress = 0.0
         errorMessage = nil
         duplicateGroups = []
+        permissionState = .notDetermined
 
         do {
             let groups = try await detector.scanForDuplicates(settings: settings) { @Sendable current, total in
@@ -43,6 +53,7 @@ class ScanViewModel: ObservableObject {
 
             print("🎬 ScanViewModel: Scan complete, found \(groups.count) groups")
             duplicateGroups = groups
+            permissionState = .authorized
 
             // Get diagnostics for debugging
             if let diag = await detector.lastDiagnostics {
@@ -53,6 +64,16 @@ class ScanViewModel: ObservableObject {
                     Max sim: \(String(format: "%.4f", diag.maxSimilarity))
                     Sample: \(diag.firstEmbeddingSample.prefix(3).map { String(format: "%.3f", $0) }.joined(separator: ", "))
                     """
+            }
+        } catch let error as PhotoLibraryService.PhotoLibraryError {
+            print("❌ ScanViewModel: Photo library permission error: \(error)")
+            switch error {
+            case .accessDenied:
+                permissionState = .denied
+            case .accessRestricted:
+                permissionState = .restricted
+            case .fetchFailed, .imageLoadFailed:
+                errorMessage = "Scan failed: \(error)"
             }
         } catch {
             print("❌ ScanViewModel: Scan failed with error: \(error)")

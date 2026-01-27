@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ContentView: View {
     var body: some View {
@@ -59,7 +60,11 @@ struct ScanView: View {
 
     var body: some View {
         Group {
-            if viewModel.isScanning {
+            if viewModel.permissionState == .denied {
+                PermissionDeniedView()
+            } else if viewModel.permissionState == .restricted {
+                PermissionRestrictedView()
+            } else if viewModel.isScanning {
                 ScanProgressView(viewModel: viewModel)
             } else if !viewModel.duplicateGroups.isEmpty {
                 DuplicateGroupsListView(viewModel: viewModel)
@@ -158,6 +163,35 @@ struct EmptyScanView: View {
             .buttonStyle(.borderedProminent)
         }
         .navigationTitle("Scan Results")
+    }
+}
+
+struct PermissionDeniedView: View {
+    var body: some View {
+        ContentUnavailableView {
+            Label("Photo Access Required", systemImage: "photo.badge.exclamationmark")
+        } description: {
+            Text("Please allow access to your photos in Settings to scan for duplicates.")
+        } actions: {
+            Button("Open Settings") {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .navigationTitle("Permission Required")
+    }
+}
+
+struct PermissionRestrictedView: View {
+    var body: some View {
+        ContentUnavailableView {
+            Label("Access Restricted", systemImage: "lock.shield")
+        } description: {
+            Text("Photo library access is restricted by parental controls or device management. Contact your administrator.")
+        }
+        .navigationTitle("Access Restricted")
     }
 }
 
