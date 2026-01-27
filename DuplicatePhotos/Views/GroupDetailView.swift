@@ -10,14 +10,31 @@ import Photos
 
 struct GroupDetailView: View {
     let group: DuplicateGroup
+    /// Binding to parent's selection state (used in selection mode)
+    @Binding var photoSelections: Set<String>
+    /// Whether we came from selection mode (affects UI and behavior)
+    let isInSelectionMode: Bool
     var onGroupDeleted: ((UUID) -> Void)?
 
-    @State private var selectedPhotos: Set<String> = []
+    @State private var localSelectedPhotos: Set<String> = []
     @State private var isDeleting = false
     @State private var showToast = false
     @State private var toastMessage = ""
     @State private var toastType: ToastView.ToastType = .success
     @Environment(\.dismiss) private var dismiss
+
+    /// Use bound selections in selection mode, local state otherwise
+    private var selectedPhotos: Set<String> {
+        get { isInSelectionMode ? photoSelections : localSelectedPhotos }
+    }
+
+    private func setSelectedPhotos(_ newValue: Set<String>) {
+        if isInSelectionMode {
+            photoSelections = newValue
+        } else {
+            localSelectedPhotos = newValue
+        }
+    }
 
     var body: some View {
         ScrollView {
@@ -28,9 +45,15 @@ struct GroupDetailView: View {
                         .font(.title2)
                         .fontWeight(.bold)
 
-                    Text("Select photos to keep or delete")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                    if isInSelectionMode {
+                        Text("Tap photos to adjust which ones to delete")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    } else {
+                        Text("Select photos to keep or delete")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 .padding(.top)
 
@@ -51,56 +74,78 @@ struct GroupDetailView: View {
                 }
                 .padding(.horizontal)
 
-                // Action buttons
+                // Action buttons (different for selection mode vs direct access)
                 VStack(spacing: 12) {
-                    Button {
-                        selectedPhotos = group.photosToDeleteIds
-                    } label: {
-                        Label("Select Duplicates", systemImage: "checkmark.circle")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.bordered)
-                    .tint(.blue)
-
-                    if !selectedPhotos.isEmpty {
-                        Button(role: .destructive) {
-                            Task {
-                                await deleteSelectedPhotos()
-                            }
+                    // Quick select buttons
+                    HStack(spacing: 12) {
+                        Button {
+                            setSelectedPhotos(group.photosToDeleteIds)
                         } label: {
-                            Label("Delete \(selectedPhotos.count) Selected", systemImage: "trash")
+                            Label("Select Duplicates", systemImage: "checkmark.circle")
                                 .frame(maxWidth: .infinity)
                         }
-                        .buttonStyle(.borderedProminent)
-                        .disabled(isDeleting)
+                        .buttonStyle(.bordered)
+                        .tint(.blue)
+
+                        Button {
+                            setSelectedPhotos([])
+                        } label: {
+                            Label("Keep All", systemImage: "xmark.circle")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.bordered)
                     }
 
-                    Button {
-                        selectedPhotos.removeAll()
-                    } label: {
-                        Text("Keep All")
-                            .frame(maxWidth: .infinity)
+                    // In selection mode, show a "Done" info bar
+                    if isInSelectionMode {
+                        HStack {
+                            Image(systemName: "info.circle")
+                                .foregroundStyle(.blue)
+                            Text("\(selectedPhotos.count) photo\(selectedPhotos.count == 1 ? "" : "s") selected for deletion")
+                                .font(.subheadline)
+                            Spacer()
+                        }
+                        .padding()
+                        .background(Color.blue.opacity(0.1))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    } else {
+                        // Direct access mode: show delete button
+                        if !selectedPhotos.isEmpty {
+                            Button(role: .destructive) {
+                                Task {
+                                    await deleteSelectedPhotos()
+                                }
+                            } label: {
+                                Label("Delete \(selectedPhotos.count) Selected", systemImage: "trash")
+                                    .frame(maxWidth: .infinity)
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .disabled(isDeleting)
+                        }
                     }
-                    .buttonStyle(.bordered)
                 }
                 .padding()
             }
         }
-        .navigationTitle("Duplicate Group")
+        .navigationTitle(isInSelectionMode ? "Edit Selection" : "Duplicate Group")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            // Auto-select duplicates (all except best)
-            selectedPhotos = group.photosToDeleteIds
+            // Auto-select duplicates on first appear (not in selection mode - already set by parent)
+            if !isInSelectionMode && localSelectedPhotos.isEmpty {
+                localSelectedPhotos = group.photosToDeleteIds
+            }
         }
         .toast(isPresenting: $showToast, message: toastMessage, type: toastType, duration: 2.0)
     }
 
     private func toggleSelection(_ photoId: String) {
-        if selectedPhotos.contains(photoId) {
-            selectedPhotos.remove(photoId)
+        var current = selectedPhotos
+        if current.contains(photoId) {
+            current.remove(photoId)
         } else {
-            selectedPhotos.insert(photoId)
+            current.insert(photoId)
         }
+        setSelectedPhotos(current)
     }
 
     private func deleteSelectedPhotos() async {
@@ -124,7 +169,7 @@ struct GroupDetailView: View {
             }
 
             // Notify parent to remove group if all duplicates deleted
-            if selectedPhotos.count == group.photosToDelete.count {
+            if localSelectedPhotos.count == group.photosToDelete.count {
                 // Wait for toast to show before dismissing
                 try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
                 await MainActor.run {
@@ -133,7 +178,7 @@ struct GroupDetailView: View {
                 }
             } else {
                 await MainActor.run {
-                    selectedPhotos.removeAll()
+                    localSelectedPhotos.removeAll()
                 }
             }
         } catch {
@@ -149,6 +194,16 @@ struct GroupDetailView: View {
         await MainActor.run {
             isDeleting = false
         }
+    }
+}
+
+// Convenience initializer for non-selection mode
+extension GroupDetailView {
+    init(group: DuplicateGroup, onGroupDeleted: ((UUID) -> Void)?) {
+        self.group = group
+        self._photoSelections = .constant([])
+        self.isInSelectionMode = false
+        self.onGroupDeleted = onGroupDeleted
     }
 }
 
@@ -282,11 +337,23 @@ struct PhotoThumbnailView: View {
     }
 }
 
-#Preview {
+#Preview("Direct Access") {
     NavigationStack {
-        GroupDetailView(group: DuplicateGroup(
-            photos: [],
-            similarityScores: [:]
-        ))
+        GroupDetailView(
+            group: DuplicateGroup(photos: [], similarityScores: [:]),
+            onGroupDeleted: nil
+        )
+    }
+}
+
+#Preview("Selection Mode") {
+    @Previewable @State var selections: Set<String> = []
+    NavigationStack {
+        GroupDetailView(
+            group: DuplicateGroup(photos: [], similarityScores: [:]),
+            photoSelections: $selections,
+            isInSelectionMode: true,
+            onGroupDeleted: nil
+        )
     }
 }
