@@ -1,9 +1,9 @@
 ---
 status: complete
 phase: 71-settings-screen
-source: [71-01-SUMMARY.md]
+source: [71-01-SUMMARY.md, 71-02-SUMMARY.md]
 started: 2026-01-27T14:00:00Z
-updated: 2026-01-27T14:15:00Z
+updated: 2026-01-27T15:30:00Z
 ---
 
 ## Current Test
@@ -42,26 +42,25 @@ result: pass
 
 ### 8. Scan Uses User Threshold
 expected: Change threshold in settings, run a scan. Scan uses the threshold you set (verify in behavior - lower threshold = more results).
-result: issue
-reported: "when I click 'start scan' i immediately see 'no duplicates found' like the screen is cached. it is not before I click on the button again where the scan actually takes place. this happens every time I open the app. first click shows me the 'no duplicates found' but then the second click works"
-severity: major
+result: pass
+note: "Re-tested after 71-02 gap closure. First click now starts scan immediately."
 
 ## Summary
 
 total: 8
-passed: 7
-issues: 1
+passed: 8
+issues: 0
 pending: 0
 skipped: 0
 
 ## Gaps
 
 - truth: "First scan click should start actual scan, not show cached results"
-  status: failed
+  status: closed
   reason: "User reported: when I click 'start scan' i immediately see 'no duplicates found' like the screen is cached. it is not before I click on the button again where the scan actually takes place. this happens every time I open the app. first click shows me the 'no duplicates found' but then the second click works"
   severity: major
   test: 8
-  root_cause: ""
-  artifacts: []
-  missing: []
-  debug_session: ""
+  root_cause: "NavigationLink navigates to ScanView but does NOT trigger scan. ScanView renders with empty duplicateGroups, showing EmptyScanView ('No Duplicates Found') before any scan runs. Only 'Scan Again' button actually calls startScan()."
+  fix_plan: "71-02-PLAN.md"
+  fix_commit: "834edd3"
+  re_test: "pass - 2026-01-27"
