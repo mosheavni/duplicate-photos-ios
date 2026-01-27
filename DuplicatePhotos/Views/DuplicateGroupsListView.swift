@@ -9,13 +9,24 @@ import SwiftUI
 import Photos
 
 struct DuplicateGroupsListView: View {
-    let groups: [DuplicateGroup]
+    @ObservedObject var viewModel: ScanViewModel
+
+    @State private var showBulkDeleteConfirmation = false
+    @State private var isDeleting = false
+    @State private var showToast = false
+    @State private var toastMessage = ""
+    @State private var toastType: ToastView.ToastType = .success
 
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 16) {
-                ForEach(groups) { group in
-                    NavigationLink(destination: GroupDetailView(group: group)) {
+                ForEach(viewModel.duplicateGroups) { group in
+                    NavigationLink(destination: GroupDetailView(
+                        group: group,
+                        onGroupDeleted: { groupId in
+                            viewModel.removeGroup(id: groupId)
+                        }
+                    )) {
                         GroupCardView(group: group)
                     }
                     .buttonStyle(.plain)
@@ -25,6 +36,69 @@ struct DuplicateGroupsListView: View {
         }
         .navigationTitle("Duplicate Groups")
         .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                if !viewModel.duplicateGroups.isEmpty {
+                    Button(role: .destructive) {
+                        showBulkDeleteConfirmation = true
+                    } label: {
+                        Label("Delete All", systemImage: "trash")
+                    }
+                    .disabled(isDeleting)
+                }
+            }
+        }
+        .confirmationDialog(
+            "Delete \(viewModel.totalPhotosToDelete) photos?",
+            isPresented: $showBulkDeleteConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("Delete \(viewModel.totalPhotosToDelete) Photos", role: .destructive) {
+                Task {
+                    await deleteAllDuplicates()
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Photos will be moved to Recently Deleted for 30 days.")
+        }
+        .toast(isPresenting: $showToast, message: toastMessage, type: toastType, duration: 2.5)
+    }
+
+    private func deleteAllDuplicates() async {
+        isDeleting = true
+        var totalDeleted = 0
+        var errors: [Error] = []
+
+        // Delete group by group for partial failure handling
+        for group in viewModel.duplicateGroups {
+            let assets = group.photosToDelete.map { $0.phAsset }
+            do {
+                try await PHPhotoLibrary.shared().performChanges {
+                    PHAssetChangeRequest.deleteAssets(assets as NSArray)
+                }
+                totalDeleted += assets.count
+            } catch {
+                errors.append(error)
+            }
+        }
+
+        await MainActor.run {
+            // Clear all groups since we deleted from all of them
+            viewModel.duplicateGroups = []
+
+            if errors.isEmpty {
+                toastMessage = "Deleted \(totalDeleted) photos"
+                toastType = .success
+            } else {
+                toastMessage = "Deleted \(totalDeleted) photos, \(errors.count) groups failed"
+                toastType = .error
+            }
+            withAnimation {
+                showToast = true
+            }
+            isDeleting = false
+        }
     }
 }
 
@@ -135,6 +209,6 @@ struct GroupCardView: View {
 
 #Preview {
     NavigationStack {
-        DuplicateGroupsListView(groups: [])
+        DuplicateGroupsListView(viewModel: ScanViewModel())
     }
 }

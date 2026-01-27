@@ -62,9 +62,9 @@ struct ScanView: View {
             if viewModel.isScanning {
                 ScanProgressView(viewModel: viewModel)
             } else if !viewModel.duplicateGroups.isEmpty {
-                DuplicateGroupsListView(groups: viewModel.duplicateGroups)
+                DuplicateGroupsListView(viewModel: viewModel)
                     .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
+                        ToolbarItem(placement: .topBarLeading) {
                             Button {
                                 Task {
                                     await viewModel.startScan()
