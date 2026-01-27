@@ -221,7 +221,6 @@ struct DuplicateGroupsListView: View {
         isDeleting = true
 
         // Capture asset identifiers (Sendable strings) instead of PHAsset objects
-        // This avoids Swift 6 actor isolation issues when crossing to PHPhotoLibrary's queue
         var assetIdentifiersToDelete: [String] = []
         var photoIdsToDelete: Set<String> = []
 
@@ -236,39 +235,37 @@ struct DuplicateGroupsListView: View {
 
         let totalToDelete = assetIdentifiersToDelete.count
 
-        // Perform deletion with fresh PHAsset fetch inside the closure
-        // This keeps PHPhotoLibrary operations entirely on its own queue
-        // Copy identifiers to a local constant to make it Sendable
-        let identifiersToDelete = assetIdentifiersToDelete
-        var deleteError: Error?
-        do {
-            try await PHPhotoLibrary.shared().performChanges {
-                // Fetch assets fresh inside the closure - this runs on PHPhotoLibrary's queue
-                let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifiersToDelete, options: nil)
-                // Use fetchResult directly with deleteAssets
-                PHAssetChangeRequest.deleteAssets(fetchResult)
-            }
-        } catch {
-            deleteError = error
-        }
+        // Use helper function to delete assets - completely isolated from actor context
+        let deleteError = await deleteAssets(identifiers: assetIdentifiersToDelete)
 
         // Update UI on main actor
-        await MainActor.run {
-            // Remove deleted photos from groups (handles partial deletion)
-            viewModel.removePhotosFromGroups(photoIds: photoIdsToDelete)
+        viewModel.removePhotosFromGroups(photoIds: photoIdsToDelete)
 
-            if deleteError == nil {
-                toastMessage = "Merged! Deleted \(totalToDelete) duplicate\(totalToDelete == 1 ? "" : "s")"
-                toastType = .success
-            } else {
-                toastMessage = "Delete failed: \(deleteError!.localizedDescription)"
-                toastType = .error
+        if deleteError == nil {
+            toastMessage = "Merged! Deleted \(totalToDelete) duplicate\(totalToDelete == 1 ? "" : "s")"
+            toastType = .success
+        } else {
+            toastMessage = "Delete failed: \(deleteError!.localizedDescription)"
+            toastType = .error
+        }
+        withAnimation {
+            showToast = true
+        }
+        exitSelectionMode()
+        isDeleting = false
+    }
+
+    // Isolated function to perform PHPhotoLibrary deletion
+    // Uses nonisolated to break actor inheritance
+    private nonisolated func deleteAssets(identifiers: [String]) async -> Error? {
+        do {
+            try await PHPhotoLibrary.shared().performChanges {
+                let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
+                PHAssetChangeRequest.deleteAssets(fetchResult)
             }
-            withAnimation {
-                showToast = true
-            }
-            exitSelectionMode()
-            isDeleting = false
+            return nil
+        } catch {
+            return error
         }
     }
 }
