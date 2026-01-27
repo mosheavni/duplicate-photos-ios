@@ -67,6 +67,30 @@ class ScanViewModel: ObservableObject {
         await detector.clearCache()
     }
 
+    /// Remove a group after all its duplicates are deleted
+    func removeGroup(id: UUID) {
+        duplicateGroups.removeAll { $0.id == id }
+    }
+
+    /// Remove specific photos from groups (for partial deletion)
+    /// Cleans up groups that become empty or have only 1 photo
+    func removePhotosFromGroups(photoIds: Set<String>) {
+        duplicateGroups = duplicateGroups.compactMap { group in
+            let remainingPhotos = group.photos.filter { !photoIds.contains($0.id) }
+            // Group needs at least 2 photos to be meaningful
+            guard remainingPhotos.count >= 2 else { return nil }
+            return DuplicateGroup(
+                photos: remainingPhotos,
+                similarityScores: group.similarityScores
+            )
+        }
+    }
+
+    /// Count of total duplicate photos that could be deleted
+    var totalPhotosToDelete: Int {
+        duplicateGroups.reduce(0) { $0 + $1.photosToDelete.count }
+    }
+
     var statusText: String {
         if isScanning {
             return "Scanning \(currentPhoto) of \(totalPhotos) photos..."
