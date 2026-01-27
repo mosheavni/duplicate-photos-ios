@@ -25,6 +25,9 @@ actor DuplicateDetector {
         print("🚀 Starting duplicate scan...")
         print("⚙️ Settings: threshold=\(settings.similarityThreshold), caching=\(settings.useCaching)")
 
+        // Ensure cache is valid for current embedding dimension
+        await cache.ensureCacheValid()
+
         // 1. Request photo library access
         let authStatus = try await photoLibrary.requestAuthorization()
         print("🔐 Photo library authorization: \(authStatus.rawValue)")
@@ -56,12 +59,14 @@ actor DuplicateDetector {
                 // Calculate image hash (simple for now)
                 let imageHash = asset.localIdentifier.hash.description
 
-                // Cache the embedding
+                // Cache the embedding with current version
+                let cacheVersion = await cache.getCurrentCacheVersion()
                 let cachedEmbedding = CachedEmbedding(
                     assetIdentifier: asset.localIdentifier,
                     embedding: embeddingVector,
                     imageHash: imageHash,
-                    createdAt: Date()
+                    createdAt: Date(),
+                    version: cacheVersion
                 )
                 await cache.saveEmbedding(cachedEmbedding)
 

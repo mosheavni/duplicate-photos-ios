@@ -13,10 +13,12 @@ struct CachedEmbedding: Codable {
     let embedding: [Float]
     let imageHash: String
     let createdAt: Date
+    let version: Int  // Cache version for dimension migrations
 }
 
 /// Service for caching photo embeddings to avoid reprocessing
 actor CacheService {
+    private let cacheVersion = 2  // Bumped for 768-dim embeddings
     private let cacheDirectory: URL
     private let cacheFileName = "embeddings_cache.json"
 
@@ -73,8 +75,20 @@ actor CacheService {
             let data = try Data(contentsOf: cacheURL)
             let decoded = try JSONDecoder().decode([String: CachedEmbedding].self, from: data)
             cache = decoded
+
+            // Check for version mismatch and auto-clear if needed
+            let hasInvalidEntries = cache.values.contains { $0.version != cacheVersion }
+            if hasInvalidEntries {
+                let oldVersion = cache.values.first?.version ?? 0
+                print("🗑️ Clearing cache due to version mismatch (old: \(oldVersion), current: \(cacheVersion))")
+                cache.removeAll()
+                await persistCache()
+            }
         } catch {
-            print("Failed to load cache: \(error)")
+            print("⚠️ Failed to load cache (may be due to struct version change): \(error)")
+            print("🗑️ Clearing corrupted cache")
+            cache.removeAll()
+            await persistCache()
         }
     }
 
@@ -95,5 +109,25 @@ actor CacheService {
         let count = cache.count
         let size = cache.values.reduce(0) { $0 + $1.embedding.count }
         return (count, size)
+    }
+
+    /// Ensure cache is loaded and valid for current version
+    func ensureCacheValid() async {
+        // Check if any cached entry has wrong version
+        let hasInvalidEntries = cache.values.contains { $0.version != cacheVersion }
+        if hasInvalidEntries || (cache.values.first != nil && cache.values.first?.version == nil) {
+            print("🗑️ Clearing cache due to version mismatch")
+            await clearCache()
+        }
+    }
+
+    /// Get current cache version
+    func getCurrentCacheVersion() -> Int {
+        return cacheVersion
+    }
+
+    /// Get expected embedding dimension
+    func getExpectedEmbeddingDimension() -> Int {
+        return 768
     }
 }
