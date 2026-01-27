@@ -16,6 +16,7 @@
 		6183A5A495C0911919FC0EE7 /* DuplicateGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA6ADCB478753E8D3B9163D /* DuplicateGroup.swift */; };
 		9728F31BA7F8DC9078228749 /* PhotoLibraryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5827240DEB380478ACCAFE9D /* PhotoLibraryService.swift */; };
 		9EC09E232DE342E2B7081C2F /* ScanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D539874ECB0E8A509871B188 /* ScanViewModel.swift */; };
+		A761937E352ED1A883EABE2A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80A4C4BF7F51372A3714670 /* SettingsView.swift */; };
 		B1297B2E3ACF0FCC45E24D05 /* EmbeddingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9966B3965AF313ABED4F7808 /* EmbeddingService.swift */; };
 		DE105A3E8A94F1B6B22B6AA8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0D413DEB5140CC60504B197 /* Assets.xcassets */; };
 		DFD0426609FF8C11EA0046FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E30295E257A7A77E5D4E57 /* ContentView.swift */; };
@@ -60,6 +61,7 @@
 		D539874ECB0E8A509871B188 /* ScanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewModel.swift; sourceTree = "<group>"; };
 		EA1C9B469ADAB56C46E90B9C /* DuplicatePhotos.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DuplicatePhotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3E30295E257A7A77E5D4E57 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F80A4C4BF7F51372A3714670 /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FFB88BF9E0181B7A152E2315 /* DuplicatePhotosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatePhotosApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +157,7 @@
 				F3E30295E257A7A77E5D4E57 /* ContentView.swift */,
 				BF1D81DA3D9007743CE96E57 /* DuplicateGroupsListView.swift */,
 				1E5CCE87A184C6811EF89986 /* GroupDetailView.swift */,
+				F80A4C4BF7F51372A3714670 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -184,8 +187,6 @@
 			dependencies = (
 			);
 			name = DuplicatePhotos;
-			packageProductDependencies = (
-			);
 			productName = DuplicatePhotos;
 			productReference = EA1C9B469ADAB56C46E90B9C /* DuplicatePhotos.app */;
 			productType = "com.apple.product-type.application";
@@ -202,8 +203,6 @@
 				32035D5233FE5774ABB0F2DD /* PBXTargetDependency */,
 			);
 			name = DuplicatePhotosUITests;
-			packageProductDependencies = (
-			);
 			productName = DuplicatePhotosUITests;
 			productReference = 2A8E11E4BBC8C2A2008D7939 /* DuplicatePhotosUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -220,8 +219,6 @@
 				0DF898DCCC65A179BD0A749C /* PBXTargetDependency */,
 			);
 			name = DuplicatePhotosTests;
-			packageProductDependencies = (
-			);
 			productName = DuplicatePhotosTests;
 			productReference = A76B13426FDC5BDD5C87C192 /* DuplicatePhotosTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -251,6 +248,7 @@
 			mainGroup = 6617AA73B23B713AC4157CED;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
+			productRefGroup = EF2004FACBCEBCD394ED7FC0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -298,6 +296,7 @@
 				FB720E7E733B8BBA3B25F754 /* ScanSettings.swift in Sources */,
 				9EC09E232DE342E2B7081C2F /* ScanViewModel.swift in Sources */,
 				4FDE1FE660019229B6986E82 /* SimilarityService.swift in Sources */,
+				A761937E352ED1A883EABE2A /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

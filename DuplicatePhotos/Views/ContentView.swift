@@ -42,6 +42,13 @@ struct ContentView: View {
             }
             .padding()
             .navigationTitle("Duplicate Photos")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink(destination: SettingsView()) {
+                        Image(systemName: "gear")
+                    }
+                }
+            }
         }
     }
 }
