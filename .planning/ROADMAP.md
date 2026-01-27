@@ -15,16 +15,16 @@
 **Plans:** 1 plan
 
 Plans:
-- [ ] 70-01-PLAN.md — Fix dimension mismatch, cache versioning, threshold update
+- [x] 70-01-PLAN.md — Fix dimension mismatch, cache versioning, threshold update
 
 ### Requirements Addressed
 - SCAN-01: Scan detects actual duplicate photos in the library
 - SCAN-03: Scan completes without errors or crashes
 
 ### Success Criteria
-- [ ] Scan with 2+ duplicate photos returns at least 1 group
-- [ ] Self-similarity test (same image) scores ≈ 1.0
-- [ ] Embedding dimension matches model output (768 or 512)
+- [x] Scan with 2+ duplicate photos returns at least 1 group
+- [x] Self-similarity test (same image) scores = 1.0
+- [x] Embedding dimension matches model output (768)
 
 ### Approach
 1. Add diagnostic logging to EmbeddingService
@@ -39,6 +39,11 @@ Plans:
 **Goal:** Users can adjust similarity threshold from the UI
 
 **Why second:** Once scan works, threshold adjustment lets users fine-tune detection sensitivity.
+
+**Plans:** 1 plan
+
+Plans:
+- [ ] 71-01-PLAN.md — SettingsView with threshold slider, cache management, about section
 
 ### Requirements Addressed
 - UI-01: Settings screen with adjustable similarity threshold
@@ -103,13 +108,13 @@ Plans:
 ## Phase Dependencies
 
 ```
-Phase 70 (Fix Embeddings)
-    ↓
-Phase 71 (Settings) ←─┐
-    ↓                 │
-Phase 72 (Batch Ops)  │ Can start after 70
-    ↓                 │
-Phase 73 (Polish) ────┘
+Phase 70 (Fix Embeddings) [COMPLETE]
+    |
+Phase 71 (Settings) <--+
+    |                  |
+Phase 72 (Batch Ops)   | Can start after 70
+    |                  |
+Phase 73 (Polish) -----+
 ```
 
 ---
@@ -130,8 +135,8 @@ These are deferred to v1.1+ after core functionality is validated.
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
-| 70 | planned | - | - |
-| 71 | pending | - | - |
+| 70 | complete | 2026-01-27 | 2026-01-27 |
+| 71 | planned | - | - |
 | 72 | pending | - | - |
 | 73 | pending | - | - |
 
