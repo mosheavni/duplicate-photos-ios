@@ -14,7 +14,12 @@ struct ScanSettings {
     /// - 0.90-0.95: Near-duplicates (recommended)
     /// - 0.80-0.90: Similar photos (may include burst sequences)
     /// Default: 0.92 for near-duplicate detection
-    var similarityThreshold: Float = 0.92
+    /// Reads from UserDefaults key "similarityThreshold" set by SettingsView @AppStorage
+    var similarityThreshold: Float {
+        let stored = UserDefaults.standard.double(forKey: "similarityThreshold")
+        // Return default if not set (0.0 means unset)
+        return stored > 0 ? Float(stored) : 0.92
+    }
 
     /// Maximum number of photos to process in one batch
     var batchSize: Int = 100
