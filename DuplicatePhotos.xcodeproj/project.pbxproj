@@ -24,6 +24,7 @@
 		EFED8E5DFEBCE84EE8368D8F /* DuplicateDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94112D1F4662166C4010CC26 /* DuplicateDetector.swift */; };
 		FB720E7E733B8BBA3B25F754 /* ScanSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AC9F74AA6AFB8011801E36 /* ScanSettings.swift */; };
 		996CAF5B49052A7FDD333BB3 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50833F0BB177A4F0D57BCB0 /* ToastView.swift */; };
+		TEST1234567890ABCDEF123456 /* SimilarityServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE1234567890ABCDEF12 /* SimilarityServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,12 +66,14 @@
 		F80A4C4BF7F51372A3714670 /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FFB88BF9E0181B7A152E2315 /* DuplicatePhotosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatePhotosApp.swift; sourceTree = "<group>"; };
 		E50833F0BB177A4F0D57BCB0 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		TESTFILE1234567890ABCDEF12 /* SimilarityServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarityServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		0DE607AAC2C249DDC225CAFE /* DuplicatePhotosTests */ = {
 			isa = PBXGroup;
 			children = (
+				TESTFILE1234567890ABCDEF12 /* SimilarityServiceTests.swift */,
 			);
 			path = DuplicatePhotosTests;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				TEST1234567890ABCDEF123456 /* SimilarityServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +398,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -485,6 +490,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -502,6 +508,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -537,6 +544,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
