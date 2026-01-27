@@ -102,18 +102,18 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 73-01-PLAN.md — Unit tests for SimilarityService (cosine similarity, grouping)
-- [ ] 73-02-PLAN.md — Empty state UI with ContentUnavailableView, permission handling
+- [x] 73-01-PLAN.md — Unit tests for SimilarityService (cosine similarity, grouping)
+- [x] 73-02-PLAN.md — Empty state UI with ContentUnavailableView, permission handling
 
 ### Requirements Addressed
 - SCAN-02: Progress bar shows meaningful progress during scan
 - TEST-01: Core services have unit test coverage
 
 ### Success Criteria
-- [ ] Unit tests for SimilarityService (cosine similarity)
-- [ ] Unit tests for connected components grouping
-- [ ] Empty state UI when no duplicates found
-- [ ] Error handling for permission denied
+- [x] Unit tests for SimilarityService (cosine similarity)
+- [x] Unit tests for connected components grouping (documented PHAsset limitation)
+- [x] Empty state UI when no duplicates found
+- [x] Error handling for permission denied
 
 ### Approach
 1. Add XCTest cases for core algorithms
@@ -127,11 +127,11 @@ Plans:
 ```
 Phase 70 (Fix Embeddings) [COMPLETE]
     |
-Phase 71 (Settings) [COMPLETE] <--+
-    |                  |
-Phase 72 (Batch Ops) [COMPLETE]   |
-    |                  |
-Phase 73 (Polish) -----+
+Phase 71 (Settings) [COMPLETE]
+    |
+Phase 72 (Batch Ops) [COMPLETE]
+    |
+Phase 73 (Polish) [COMPLETE]
 ```
 
 ---
@@ -155,7 +155,7 @@ These are deferred to v1.1+ after core functionality is validated.
 | 70 | complete | 2026-01-27 | 2026-01-27 |
 | 71 | complete | 2026-01-27 | 2026-01-27 |
 | 72 | complete | 2026-01-27 | 2026-01-27 |
-| 73 | pending | - | - |
+| 73 | complete | 2026-01-27 | 2026-01-27 |
 
 ---
 
