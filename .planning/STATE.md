@@ -6,9 +6,9 @@
 
 ## Current Phase
 
-**Phase 71: Settings Screen**
+**Phase 72: Batch Operations**
 
-Status: `completed` ✅
+Status: `in progress` 🚧
 
 ---
 
@@ -23,6 +23,7 @@ Status: `completed` ✅
 | 2026-01-27 | **Phase 70 completed** - Fixed embedding extraction |
 | 2026-01-27 | **Phase 71-01 completed** - Settings screen with persisted threshold |
 | 2026-01-27 | **Phase 71-02 completed** - Auto-start scan fix (gap closure) |
+| 2026-01-27 | **Phase 72-01 completed** - Quality scoring and selection helpers |
 
 ---
 
@@ -52,6 +53,8 @@ Status: `completed` ✅
 | Threshold as computed property | Single source of truth, scans auto-use user preference | 2026-01-27 |
 | .task modifier for auto-start | Best practice for async on view appear, handles cancellation | 2026-01-27 |
 | Conditional isEmpty check | Prevents re-scan on back navigation while allowing first-appear scan | 2026-01-27 |
+| Quality score weights | 50% resolution, 30% file size, 20% recency for best photo selection | 2026-01-27 |
+| Normalization limits | 100MP max, 50MB max, 1 year recency for score normalization | 2026-01-27 |
 
 ---
 
@@ -61,8 +64,12 @@ Status: `completed` ✅
 - `DuplicatePhotos/Views/ContentView.swift` - Added gear icon toolbar (Phase 71-01), auto-start scan (Phase 71-02)
 - `DuplicatePhotos/Models/ScanSettings.swift` - UserDefaults integration (Phase 71-01)
 - `DuplicatePhotos.xcodeproj/project.pbxproj` - Added SettingsView (Phase 71-01)
+- `DuplicatePhotos/Models/PhotoAsset.swift` - Quality scoring (Phase 72-01)
+- `DuplicatePhotos/Models/DuplicateGroup.swift` - Selection helpers (Phase 72-01)
+- `DuplicatePhotos/ViewModels/ScanViewModel.swift` - Group removal (Phase 72-01)
 - `.planning/phases/71-settings-screen/71-01-SUMMARY.md` - Created
 - `.planning/phases/71-settings-screen/71-02-SUMMARY.md` - Created
+- `.planning/phases/72-batch-operations/72-01-SUMMARY.md` - Created
 
 ---
 
@@ -77,9 +84,9 @@ Status: `completed` ✅
 ## Session Continuity
 
 **Last session:** 2026-01-27
-**Stopped at:** Completed 71-02-PLAN.md (gap closure)
+**Stopped at:** Completed 72-01-PLAN.md
 **Resume file:** None
 
 ## Next Action
 
-Phase 71 complete. Gap closure fixed auto-start scan bug. Ready to re-run UAT test #8 to verify two-click behavior eliminated.
+Phase 72-01 complete. Quality scoring and selection helpers implemented. Ready for 72-02: UI implementation with "Delete All" button.
