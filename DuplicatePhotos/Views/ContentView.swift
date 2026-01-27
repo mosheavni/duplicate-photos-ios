@@ -90,6 +90,12 @@ struct ScanView: View {
         .onChange(of: viewModel.errorMessage) { _, newValue in
             showError = newValue != nil
         }
+        .task {
+            // Auto-start scan when view first appears
+            if !viewModel.isScanning && viewModel.duplicateGroups.isEmpty {
+                await viewModel.startScan()
+            }
+        }
     }
 }
 
