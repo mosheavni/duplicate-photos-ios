@@ -33,11 +33,18 @@ actor SimilarityService {
         return dotProduct / denominator
     }
 
+    /// Result of finding similar pairs, includes diagnostics
+    struct SimilarityResult: Sendable {
+        let pairs: [(PhotoAsset, PhotoAsset, Float)]
+        let maxSimilarity: Float
+        let comparisons: Int
+    }
+
     /// Find similar pairs above threshold
     func findSimilarPairs(
         photos: [PhotoAsset],
         threshold: Float
-    ) async -> [(PhotoAsset, PhotoAsset, Float)] {
+    ) async -> SimilarityResult {
         var similarPairs: [(PhotoAsset, PhotoAsset, Float)] = []
         var maxSimilarity: Float = 0.0
         var comparisonCount = 0
@@ -77,7 +84,7 @@ actor SimilarityService {
         print("📈 Max similarity found: \(maxSimilarity)")
         print("✅ Similar pairs found: \(similarPairs.count)")
 
-        return similarPairs
+        return SimilarityResult(pairs: similarPairs, maxSimilarity: maxSimilarity, comparisons: comparisonCount)
     }
 
     /// Group similar photos using connected components (DFS)

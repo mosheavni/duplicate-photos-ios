@@ -16,9 +16,10 @@ class ScanViewModel: ObservableObject {
     @Published var totalPhotos: Int = 0
     @Published var duplicateGroups: [DuplicateGroup] = []
     @Published var errorMessage: String?
+    @Published var diagnosticInfo: String?  // Shows max similarity for debugging
 
     private lazy var detector = DuplicateDetector()
-    private let settings = ScanSettings.default
+    private var settings = ScanSettings.default
 
     init() {
         print("✅ ScanViewModel initialized")
@@ -42,6 +43,17 @@ class ScanViewModel: ObservableObject {
 
             print("🎬 ScanViewModel: Scan complete, found \(groups.count) groups")
             duplicateGroups = groups
+
+            // Get diagnostics for debugging
+            if let diag = await detector.lastDiagnostics {
+                diagnosticInfo = """
+                    \(diag.debugMessage)
+                    Photos: \(diag.photosScanned), Dim: \(diag.embeddingDimension)
+                    Magnitude: \(String(format: "%.4f", diag.rawMagnitude))
+                    Max sim: \(String(format: "%.4f", diag.maxSimilarity))
+                    Sample: \(diag.firstEmbeddingSample.prefix(3).map { String(format: "%.3f", $0) }.joined(separator: ", "))
+                    """
+            }
         } catch {
             print("❌ ScanViewModel: Scan failed with error: \(error)")
             errorMessage = "Scan failed: \(error.localizedDescription)"

@@ -147,6 +147,22 @@ struct EmptyScanView: View {
                     .foregroundStyle(.secondary)
             }
 
+            // Show diagnostic info for debugging
+            if let diag = viewModel.diagnosticInfo {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Debug Info:")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                    Text(diag)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+                .padding()
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(8)
+                .padding(.horizontal)
+            }
+
             Spacer()
 
             Button {

@@ -18,7 +18,7 @@ struct CachedEmbedding: Codable {
 
 /// Service for caching photo embeddings to avoid reprocessing
 actor CacheService {
-    private let cacheVersion = 3  // Bumped: model actually outputs 512-dim
+    private let cacheVersion = 4  // Bumped: model outputs 768-dim Float16
     private let cacheDirectory: URL
     private let cacheFileName = "embeddings_cache.json"
 
@@ -128,6 +128,6 @@ actor CacheService {
 
     /// Get expected embedding dimension
     func getExpectedEmbeddingDimension() -> Int {
-        return 512
+        return 768
     }
 }

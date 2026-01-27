@@ -8,12 +8,27 @@
 import Foundation
 import Photos
 
+/// Diagnostic info from last scan
+struct ScanDiagnostics: Sendable {
+    let photosScanned: Int
+    let embeddingsExtracted: Int
+    let comparisons: Int
+    let maxSimilarity: Float
+    let pairsAboveThreshold: Int
+    let embeddingDimension: Int
+    let firstEmbeddingSample: [Float]  // First 5 values of first embedding
+    let rawMagnitude: Float  // Magnitude before normalization
+    let debugMessage: String  // Additional debug info
+}
+
 /// Main orchestrator for duplicate detection pipeline
 actor DuplicateDetector {
     private let photoLibrary = PhotoLibraryService()
     private let embedding = EmbeddingService()
     private let similarity = SimilarityService()
     private let cache = CacheService()
+
+    private(set) var lastDiagnostics: ScanDiagnostics?
 
     typealias ProgressHandler = @Sendable (Int, Int) -> Void
 
@@ -22,19 +37,12 @@ actor DuplicateDetector {
         settings: ScanSettings = .default,
         progress: ProgressHandler? = nil
     ) async throws -> [DuplicateGroup] {
-        print("🚀 Starting duplicate scan...")
-        print("⚙️ Settings: threshold=\(settings.similarityThreshold), caching=\(settings.useCaching)")
+        print("🚀 Scan starting (threshold: \(settings.similarityThreshold))")
+        await cache.clearCache()  // Force fresh extraction
 
-        // Ensure cache is valid for current embedding dimension
-        await cache.ensureCacheValid()
-
-        // 1. Request photo library access
-        let authStatus = try await photoLibrary.requestAuthorization()
-        print("🔐 Photo library authorization: \(authStatus.rawValue)")
-
-        // 2. Fetch all photos
+        let _ = try await photoLibrary.requestAuthorization()
         let assets = try await photoLibrary.fetchAllPhotos()
-        print("📷 Fetched \(assets.count) photos from library")
+        print("📷 \(assets.count) photos")
         progress?(0, assets.count)
 
         // 3. Extract embeddings (with caching)
@@ -81,22 +89,43 @@ actor DuplicateDetector {
             progress?(index + 1, assets.count)
         }
 
-        print("📊 Total photos with embeddings: \(photoAssets.count)")
         let validEmbeddings = photoAssets.filter { $0.embedding != nil }.count
-        print("✅ Valid embeddings: \(validEmbeddings)")
 
-        // 4. Find similar pairs
-        print("🔍 Finding similar pairs (threshold: \(settings.similarityThreshold))...")
-        let similarPairs = await similarity.findSimilarPairs(
+        // Collect first embedding sample for diagnostics
+        let firstEmbedding = photoAssets.first?.embedding ?? []
+        let firstEmbeddingSample = Array(firstEmbedding.prefix(5))
+        let rawMagnitude = sqrt(firstEmbedding.reduce(0) { $0 + ($1 * $1) })
+
+        let similarityResult = await similarity.findSimilarPairs(
             photos: photoAssets,
             threshold: settings.similarityThreshold
         )
-        print("🎯 Found \(similarPairs.count) similar pairs")
 
-        // 5. Group into duplicate sets using connected components
-        let finalGroups = reconstructGroups(from: similarPairs, photos: photoAssets)
-        print("📦 Grouped into \(finalGroups.count) duplicate groups")
+        // Check for potential issues
+        var debugMsg = ""
+        if rawMagnitude < 0.001 {
+            debugMsg = "⚠️ ZERO EMBEDDINGS - model may be corrupt or preprocessing failed"
+        } else if similarityResult.maxSimilarity < 0.5 {
+            debugMsg = "Low similarity - check threshold or image quality"
+        } else {
+            debugMsg = "OK"
+        }
 
+        // Store diagnostics
+        lastDiagnostics = ScanDiagnostics(
+            photosScanned: assets.count,
+            embeddingsExtracted: validEmbeddings,
+            comparisons: similarityResult.comparisons,
+            maxSimilarity: similarityResult.maxSimilarity,
+            pairsAboveThreshold: similarityResult.pairs.count,
+            embeddingDimension: photoAssets.first?.embedding?.count ?? 0,
+            firstEmbeddingSample: firstEmbeddingSample,
+            rawMagnitude: rawMagnitude,
+            debugMessage: debugMsg
+        )
+
+        let finalGroups = reconstructGroups(from: similarityResult.pairs, photos: photoAssets)
+        print("✅ Done: \(finalGroups.count) groups, maxSim: \(String(format: "%.3f", similarityResult.maxSimilarity))")
         return finalGroups
     }
 
